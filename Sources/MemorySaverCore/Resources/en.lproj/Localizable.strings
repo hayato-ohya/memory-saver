@@ -1,0 +1,301 @@
+/*
+  MemorySaver translations: plain strings.
+
+  To add a language:
+    1. Copy the folder en.lproj to <language>.lproj, e.g. fr.lproj or zh-Hans.lproj
+       (the folder name is the language code; the app finds the folder by itself, nothing
+       in the code needs to change).
+    2. In both files of the new folder, Localizable.strings and Localizable.stringsdict,
+       translate the text on the right of the "=" signs. Do not change the keys on the left.
+    3. Keep every format specifier (%@, %lld, %1$@, %2$@) and use each one exactly once.
+       When a sentence reads better in another order, reorder the positional ones:
+       "%2$@ ... %1$@". Write a literal percent sign as %%.
+    4. Plural wording lives in Localizable.stringsdict: provide the plural categories your
+       language needs (for example one / few / many / other). "other" is always required.
+    5. Keep the entries in the same order; the comment above each one says where the text
+       appears and what its arguments are. A missing entry shows the English text.
+*/
+
+/* ==== Popover: header ==== */
+
+/* Popover, empty state shown until the first memory sample arrives. Title, one short line, shown above the description. */
+"popover.measuring.title" = "Measuring";
+
+/* Popover, empty state: explanation under the title "Measuring". One line, about 330 pt wide at most. */
+"popover.measuring.description" = "Taking the first sample…";
+
+/* Popover, shown instead of the memory figures when no sample could be taken. Title, one short line; the error message appears under it. */
+"popover.unavailable.title" = "Can't show memory information";
+
+/* Popover, headline at the top left of the memory summary. Shares the row with the memory pressure label, so keep it to one short word. */
+"popover.header.memory" = "Memory";
+
+/* Popover, memory summary, right-aligned under the usage bar; only shown when swap is in use. %@ = amount of swap in use, already formatted with its unit (e.g. "2 GB"). Shares the row with the "used / total" figures; keep it short. */
+"popover.header.swap" = "Swap %@";
+
+/* Popover, memory summary, right of the headline "Memory", shown in green. The state of the macOS memory pressure indicator (the same one Activity Monitor shows). Must fit on one line next to the headline. */
+"popover.pressure.normal" = "Memory pressure: Normal";
+
+/* Popover, memory summary, shown in yellow. Memory pressure is at the macOS "warning" level. Same row and length limit as the "Normal" label; keep the three pressure labels parallel. */
+"popover.pressure.warning" = "Memory pressure: Warning";
+
+/* Popover, memory summary, shown in red. Memory pressure is at the macOS "critical" level. Same row and length limit as the "Normal" label. */
+"popover.pressure.critical" = "Memory pressure: Critical";
+
+
+/* ==== Popover: WindowServer ==== */
+
+/* Popover, WindowServer section, right of the name "WindowServer" (a macOS system process name; do not translate it elsewhere). Shown when its memory use could not be read. One word or short phrase. */
+"popover.windowServer.unavailable" = "Unavailable";
+
+/* Popover, WindowServer section, small grey heading above a list of app names with their window counts and estimated window memory, largest first. The list is an estimate. One line. */
+"popover.windowServer.suspectsTitle" = "Apps with large windows (estimated)";
+
+/* Popover, WindowServer section, small grey note under the list of apps. May wrap onto several lines (the popover is 360 pt wide). "WindowServer" is the macOS process name and stays as is. */
+"popover.windowServer.suspectsNote" = "This is an estimate, since the exact breakdown isn't available. Relaunching these apps may reduce WindowServer memory.";
+
+
+/* ==== Popover: recommendations ==== */
+
+/* Popover, headline of the section that lists apps worth relaunching to get their memory back. One line. */
+"popover.recommendations.title" = "Suggested relaunches";
+
+
+/* ==== Popover: ranking ==== */
+
+/* Popover, headline of the list of apps ordered by memory use. The list always shows the ten largest apps; the number is part of the text. One line. */
+"popover.ranking.title" = "Memory by app (top 10)";
+
+/* Popover, small grey line under the ranking headline. Explains that clicking an app row shows the processes that belong to the app. One line. */
+"popover.ranking.hint" = "Click a row to see its processes";
+
+/* Tooltip of an app row in the ranking while its process list is open. Clicking the row closes the list. */
+"popover.ranking.rowHelp.hide" = "Hide processes";
+
+/* Tooltip of an app row in the ranking while its process list is closed. Clicking the row opens the list. */
+"popover.ranking.rowHelp.show" = "Show processes";
+
+/* Accessibility hint (read aloud by VoiceOver, not shown) of an app row in the ranking. Describes what activating the row does. */
+"popover.ranking.rowHint" = "Shows or hides the app's processes";
+
+
+/* ==== Popover: footer ==== */
+
+/* Popover, bottom left, small grey text. %@ = the time of the last measurement, already formatted for the user's locale (e.g. "7:13:20"). Must fit next to four icon buttons. */
+"popover.footer.updated" = "Updated %@";
+
+/* Tooltip of the circular-arrow button at the bottom right of the popover, which measures memory again immediately. */
+"popover.footer.refresh.help" = "Refresh now";
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the circular-arrow button at the bottom right of the popover. */
+"popover.footer.refresh.accessibilityLabel" = "Refresh";
+
+/* Tooltip of the gear button at the bottom right of the popover, which opens the settings window. */
+"popover.footer.settings.help" = "Settings";
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the gear button at the bottom right of the popover. */
+"popover.footer.settings.accessibilityLabel" = "Settings";
+
+/* Tooltip of the power button at the bottom right of the popover, which quits the app. "MemorySaver" is the product name and stays as is. */
+"popover.footer.quit.help" = "Quit MemorySaver";
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the power button at the bottom right of the popover. */
+"popover.footer.quit.accessibilityLabel" = "Quit";
+
+
+/* ==== Relaunch ==== */
+
+/* Button that quits an app and opens it again. It appears on every app row in the ranking, in a column only 52 pt wide, and also (larger) in the suggested relaunches list. Keep it to a single short word. */
+"relaunch.button" = "Relaunch";
+
+/* Title of the confirmation dialog shown after the Relaunch button is pressed. %@ = the name of the app. */
+"relaunch.confirm.title" = "Relaunch %@?";
+
+/* Message of the relaunch confirmation dialog, under its title. %@ = the name of the app. The app is asked to quit normally, so it may show its own "save changes?" prompt. */
+"relaunch.confirm.message" = "%@ will quit and then open again. If it has unsaved documents, the app will ask whether to save them.";
+
+/* Default button of the relaunch confirmation dialog: confirms the relaunch. Dialog button, so it can be wider than the list button. */
+"relaunch.confirm.button" = "Relaunch";
+
+/* Cancel button of the relaunch confirmation dialog: nothing is quit. */
+"relaunch.confirm.cancel" = "Cancel";
+
+/* Popover, small text under an app row while a relaunch is in progress: the app was asked to quit and has not quit yet. May wrap onto two lines (360 pt wide popover). */
+"relaunch.status.waiting" = "Waiting for the app to quit… It may be asking whether to save.";
+
+/* Link-style button under the "Waiting for the app to quit…" text. Gives up waiting; the app is not reopened. */
+"relaunch.status.stopWaiting" = "Stop waiting";
+
+/* Tooltip of the "Stop waiting" button. Explains that the app is left alone: it is not force-quit and is not reopened if it quits later. */
+"relaunch.status.stopWaitingHelp" = "The app won't be force-quit, and won't reopen if it quits.";
+
+/* Link-style button at the right of a relaunch result message. Removes the message. Shares the row with the message; keep it short. */
+"relaunch.status.dismiss" = "Dismiss";
+
+/* A relaunch status message prefixed with the app's name, used for apps no longer in the lists above. %1$@ = the name of the app. %2$@ = the status message, a complete sentence (one of the relaunch.status / relaunch.result texts). Only the punctuation and order are yours to change. */
+"relaunch.status.withAppName" = "%1$@: %2$@";
+
+/* Popover, result of a relaunch attempt: by the time the button was confirmed, the app was no longer running (or its process id now belongs to another program), so nothing was quit. Wraps onto several lines. */
+"relaunch.result.notRunning" = "The app has already quit or been replaced by another app, so nothing was done.";
+
+/* Popover, result of a relaunch attempt that failed before anything was quit. %@ = the reason, a complete sentence from the relaunch.error texts. Wraps onto several lines. */
+"relaunch.result.failed" = "Couldn't relaunch (the app wasn't quit): %@";
+
+/* Popover, result after the user pressed "Stop waiting". The app was never force-quit and will not be reopened. */
+"relaunch.result.stoppedWaiting" = "Stopped waiting. The app may still be running, and it won't reopen if it quits.";
+
+/* Popover, result when the app did not quit within the time limit of 5 minutes (the number is fixed in the app). "MemorySaver" is the product name. Long: wraps onto several lines. */
+"relaunch.result.waitTimedOut" = "The app didn't quit within 5 minutes, so MemorySaver stopped waiting. It won't reopen if it quits later; open it yourself if needed.";
+
+/* Popover, result when the app quit but could not be started again. %@ = the system's description of the error (in the user's system language, not controlled by this file). */
+"relaunch.result.quitButNotReopened" = "The app quit but couldn't be reopened (%@). Open it yourself.";
+
+/* Reason shown inside the "Couldn't relaunch" message (relaunch.result.failed): the app is a system component or has no app bundle to reopen. A complete sentence with a final full stop. */
+"relaunch.error.unsupported" = "This app can't be relaunched.";
+
+/* Reason shown inside the "Couldn't relaunch" message (relaunch.result.failed): the app file was moved or deleted, so nothing was quit. A complete sentence with a final full stop. */
+"relaunch.error.appNotFound" = "The app couldn't be found.";
+
+/* Reason shown inside the "Couldn't relaunch" message (relaunch.result.failed): the system could not deliver the request to quit to the app. A complete sentence with a final full stop. */
+"relaunch.error.quitRefused" = "The app didn't accept the quit request.";
+
+
+/* ==== Growth ==== */
+
+/* Tooltip on an app's growth figure (the "+620 MB" under its memory amount). %@ = the growth, already formatted with a plus sign and unit (e.g. "+620 MB"). The baseline is the app's size shortly after it launched. */
+"growth.sinceLaunch" = "%@ since launch";
+
+/* Tooltip on WindowServer's growth figure. %@ = the growth, already formatted with a plus sign and unit (e.g. "+620 MB"). The baseline is its size when the Mac started up. */
+"growth.sinceStartup" = "%@ since startup";
+
+/* Tooltip on a growth figure for an app that was already running when MemorySaver started measuring. %@ = the growth, already formatted with a plus sign and unit (e.g. "+620 MB"). The baseline is its size when MemorySaver first saw it. */
+"growth.sinceMonitoringBegan" = "%@ since monitoring began";
+
+
+/* ==== Icon legend ==== */
+
+/* Tooltip of the question-mark button at the bottom right of the popover, which opens the icon legend. */
+"legend.button.help" = "What the icons mean";
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the question-mark button that opens the icon legend. */
+"legend.button.accessibilityLabel" = "What the icons mean";
+
+/* Icon legend: small grey heading above the explanations of the menu bar icon's states. */
+"legend.section.menuBar" = "Menu bar icon";
+
+/* Icon legend: explains the plain memory-chip icon in the menu bar. The legend is 300 pt wide, with the icon at the left, so text wraps early; keep it short. */
+"legend.menuBar.normal" = "Normal. No relaunch suggestions.";
+
+/* Icon legend: explains the menu bar icon drawn filled with a small orange dot. The parenthesis describes how the icon looks; keep it accurate. */
+"legend.menuBar.recommendation" = "An app would benefit from a relaunch (filled icon with an orange dot).";
+
+/* Icon legend: explains the yellow menu bar icon. "Warning" must match the wording of popover.pressure.warning. The colour is part of the explanation. */
+"legend.menuBar.warning" = "Memory pressure is Warning (yellow).";
+
+/* Icon legend: explains the red menu bar icon. "Critical" must match the wording of popover.pressure.critical. The colour is part of the explanation. */
+"legend.menuBar.critical" = "Memory pressure is Critical (red).";
+
+/* Icon legend: small grey heading above the explanations of the icons inside the popover ("this window" is the popover). */
+"legend.section.window" = "Icons in this window";
+
+/* Icon legend: explains the small right-pointing arrow at the left of each app row in the ranking. */
+"legend.window.expand" = "Show or hide an app's processes (click anywhere on the row).";
+
+/* Icon legend: explains the circular-arrow button in the popover footer. */
+"legend.window.refresh" = "Measure again now";
+
+/* Icon legend: explains the gear button in the popover footer. */
+"legend.window.settings" = "Open settings";
+
+/* Icon legend: explains the power button in the popover footer. "MemorySaver" is the product name and stays as is. */
+"legend.window.quit" = "Quit MemorySaver";
+
+/* Icon legend: small grey heading above the explanation of the figures starting with a plus sign. */
+"legend.section.growth" = "Growth (numbers with +)";
+
+/* Icon legend: explains the growth figures shown under an app's memory amount. "+604 MB" is an example of such a figure. "WindowServer" is the macOS process name and stays as is. Wraps onto several lines. */
+"legend.growth.note" = "A figure like \"+604 MB\" under a memory amount is the growth since the app launched (for WindowServer, since the Mac started up).";
+
+
+/* ==== Settings ==== */
+
+/* Title bar of the settings window. "MemorySaver" is the product name and stays as is. */
+"settings.windowTitle" = "MemorySaver Settings";
+
+/* Settings, heading of the section with the three steppers that decide when an app or WindowServer is flagged. */
+"settings.section.thresholds" = "Thresholds";
+
+/* Settings, label of a stepper: an app is suggested for relaunch once it uses at least this much memory. %@ = the amount, already formatted with its unit (e.g. "2 GB"). The window is 440 pt wide; the stepper takes space at the right. */
+"settings.threshold.appFootprint" = "App memory: %@ or more";
+
+/* Settings, label of a stepper: an app is suggested for relaunch once its memory has grown to at least this multiple of its size just after launch. %@ = the factor with one decimal place, formatted for the user's locale (e.g. "1.5"). */
+"settings.threshold.appGrowth" = "Growth since launch: %@ times or more";
+
+/* Settings, label of a stepper: WindowServer is flagged once its memory has grown by at least this much. %@ = the amount, already formatted with its unit (e.g. "1 GB"). "WindowServer" is the macOS process name and stays as is. */
+"settings.threshold.windowServerGrowth" = "WindowServer growth: %@ or more";
+
+/* Settings, heading of the section with the notification and login options. */
+"settings.section.notifications" = "Notifications";
+
+/* Settings, label of the switch that turns system notifications on or off. */
+"settings.notifications.toggle" = "Notify when memory is running low";
+
+/* Settings, orange note under the notifications switch, shown when the user switched notifications on here but macOS refuses them. Use the exact names macOS uses for "System Settings" and its "Notifications" pane. "MemorySaver" is the product name. */
+"settings.notifications.denied" = "Notifications for MemorySaver are turned off in System Settings, so none will appear. Allow them in System Settings > Notifications.";
+
+/* Settings, label of the switch that makes the app start when the user logs in. */
+"settings.launchAtLogin.toggle" = "Open at login";
+
+/* Settings, orange note under the "Open at login" switch when changing it failed. %@ = the system's description of the error (in the user's system language). The name of the option must match settings.launchAtLogin.toggle. */
+"settings.launchAtLogin.error" = "Couldn't change Open at login: %@";
+
+/* Settings, heading of the section that lists apps that are never suggested for relaunch. */
+"settings.section.exclusions" = "Excluded apps";
+
+/* Settings, grey text shown in the excluded apps section while the list is empty. */
+"settings.exclusions.empty" = "No excluded apps.";
+
+/* Settings, button at the right of an excluded app: takes the app off the list (it can be suggested again). */
+"settings.exclusions.remove" = "Remove";
+
+/* Settings, title of the menu button that lists the apps currently running so one can be added to the excluded apps. */
+"settings.exclusions.addMenu" = "Add from running apps";
+
+
+/* ==== Menu bar ==== */
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the app's icon in the menu bar. */
+"menuBar.accessibilityLabel" = "Memory monitor";
+
+
+/* ==== Notification ==== */
+
+/* Title of the system notification posted when memory pressure is high and an app or WindowServer is worth acting on. */
+"notification.title" = "Memory is running low";
+
+/* Body of the system notification, first sentence. %@ = the names of the apps worth relaunching, joined with the list separator (notification.appListSeparator). A complete sentence. */
+"notification.relaunchApps" = "Relaunching %@ may help.";
+
+/* Body of the system notification, sentence about WindowServer (the macOS process name; it stays as is). It is added after the sentence about apps when both apply. */
+"notification.windowServer" = "WindowServer memory use is growing.";
+
+/* Separator placed between app names in a list inside the notification ("Foo, Bar, Baz"). Include any space you need. */
+"notification.appListSeparator" = ", ";
+
+/* Separator placed between the sentences of the notification body when it has more than one. Include any space you need (may be empty in languages that do not separate sentences with a space; a single space is the value here). */
+"notification.sentenceSeparator" = " ";
+
+
+/* ==== Errors ==== */
+
+/* Popover, orange line above the footer, shown instead of any data when the history database could not be opened. %@ = the system's description of the error (in the user's system language). The line is about 330 pt wide and may wrap. */
+"error.historyOpenFailed" = "Could not open the history database: %@";
+
+/* Popover, orange line above the footer: the history database could not be used, so measurements are kept in memory only until the app quits. %@ = the system's description of the error. "MemorySaver" is the product name. */
+"error.historyUnsaved" = "History cannot be saved, so it is kept only until MemorySaver quits: %@";
+
+/* Popover, orange line above the footer: the memory measurement itself failed. %@ = the system's description of the error. */
+"error.memoryReadFailed" = "Could not read memory information: %@";
+
+/* Popover, orange line above the footer: current numbers are shown, but saving or reading the history failed. %@ = the system's description of the error. */
+"error.historyAccessFailed" = "Could not save or read history: %@";

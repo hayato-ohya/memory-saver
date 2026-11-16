@@ -1,0 +1,283 @@
+/* ==== Popover: header ==== */
+
+/* Popover, empty state shown until the first memory sample arrives. Title, one short line, shown above the description. */
+"popover.measuring.title" = "計測中";
+
+/* Popover, empty state: explanation under the title "Measuring". One line, about 330 pt wide at most. */
+"popover.measuring.description" = "最初のサンプルを取得しています。";
+
+/* Popover, shown instead of the memory figures when no sample could be taken. Title, one short line; the error message appears under it. */
+"popover.unavailable.title" = "メモリ情報を表示できません";
+
+/* Popover, headline at the top left of the memory summary. Shares the row with the memory pressure label, so keep it to one short word. */
+"popover.header.memory" = "メモリ";
+
+/* Popover, memory summary, right-aligned under the usage bar; only shown when swap is in use. %@ = amount of swap in use, already formatted with its unit (e.g. "2 GB"). Shares the row with the "used / total" figures; keep it short. */
+"popover.header.swap" = "スワップ %@";
+
+/* Popover, memory summary, right of the headline "Memory", shown in green. The state of the macOS memory pressure indicator (the same one Activity Monitor shows). Must fit on one line next to the headline. */
+"popover.pressure.normal" = "プレッシャー: 通常";
+
+/* Popover, memory summary, shown in yellow. Memory pressure is at the macOS "warning" level. Same row and length limit as the "Normal" label; keep the three pressure labels parallel. */
+"popover.pressure.warning" = "プレッシャー: 警告";
+
+/* Popover, memory summary, shown in red. Memory pressure is at the macOS "critical" level. Same row and length limit as the "Normal" label. */
+"popover.pressure.critical" = "プレッシャー: 危険";
+
+
+/* ==== Popover: WindowServer ==== */
+
+/* Popover, WindowServer section, right of the name "WindowServer" (a macOS system process name; do not translate it elsewhere). Shown when its memory use could not be read. One word or short phrase. */
+"popover.windowServer.unavailable" = "取得不可";
+
+/* Popover, WindowServer section, small grey heading above a list of app names with their window counts and estimated window memory, largest first. The list is an estimate. One line. */
+"popover.windowServer.suspectsTitle" = "ウィンドウの大きいアプリ（推定）";
+
+/* Popover, WindowServer section, small grey note under the list of apps. May wrap onto several lines (the popover is 360 pt wide). "WindowServer" is the macOS process name and stays as is. */
+"popover.windowServer.suspectsNote" = "正確な内訳は取得できないため推定です。これらのアプリを再起動すると WindowServer のメモリが減る場合があります。";
+
+
+/* ==== Popover: recommendations ==== */
+
+/* Popover, headline of the section that lists apps worth relaunching to get their memory back. One line. */
+"popover.recommendations.title" = "再起動をおすすめ";
+
+
+/* ==== Popover: ranking ==== */
+
+/* Popover, headline of the list of apps ordered by memory use. The list always shows the ten largest apps; the number is part of the text. One line. */
+"popover.ranking.title" = "アプリ別メモリ（上位10）";
+
+/* Popover, small grey line under the ranking headline. Explains that clicking an app row shows the processes that belong to the app. One line. */
+"popover.ranking.hint" = "行をクリックするとプロセスの内訳を表示します";
+
+/* Tooltip of an app row in the ranking while its process list is open. Clicking the row closes the list. */
+"popover.ranking.rowHelp.hide" = "プロセスの内訳を閉じる";
+
+/* Tooltip of an app row in the ranking while its process list is closed. Clicking the row opens the list. */
+"popover.ranking.rowHelp.show" = "プロセスの内訳を表示";
+
+/* Accessibility hint (read aloud by VoiceOver, not shown) of an app row in the ranking. Describes what activating the row does. */
+"popover.ranking.rowHint" = "プロセスの内訳を開閉します";
+
+
+/* ==== Popover: footer ==== */
+
+/* Popover, bottom left, small grey text. %@ = the time of the last measurement, already formatted for the user's locale (e.g. "7:13:20"). Must fit next to four icon buttons. */
+"popover.footer.updated" = "更新 %@";
+
+/* Tooltip of the circular-arrow button at the bottom right of the popover, which measures memory again immediately. */
+"popover.footer.refresh.help" = "今すぐ更新";
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the circular-arrow button at the bottom right of the popover. */
+"popover.footer.refresh.accessibilityLabel" = "更新";
+
+/* Tooltip of the gear button at the bottom right of the popover, which opens the settings window. */
+"popover.footer.settings.help" = "設定";
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the gear button at the bottom right of the popover. */
+"popover.footer.settings.accessibilityLabel" = "設定";
+
+/* Tooltip of the power button at the bottom right of the popover, which quits the app. "MemorySaver" is the product name and stays as is. */
+"popover.footer.quit.help" = "MemorySaver を終了";
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the power button at the bottom right of the popover. */
+"popover.footer.quit.accessibilityLabel" = "終了";
+
+
+/* ==== Relaunch ==== */
+
+/* Button that quits an app and opens it again. It appears on every app row in the ranking, in a column only 52 pt wide, and also (larger) in the suggested relaunches list. Keep it to a single short word. */
+"relaunch.button" = "再起動";
+
+/* Title of the confirmation dialog shown after the Relaunch button is pressed. %@ = the name of the app. */
+"relaunch.confirm.title" = "%@ を再起動しますか？";
+
+/* Message of the relaunch confirmation dialog, under its title. %@ = the name of the app. The app is asked to quit normally, so it may show its own "save changes?" prompt. */
+"relaunch.confirm.message" = "%@ を終了してから開き直します。未保存の書類がある場合は、アプリが保存の確認を表示します。";
+
+/* Default button of the relaunch confirmation dialog: confirms the relaunch. Dialog button, so it can be wider than the list button. */
+"relaunch.confirm.button" = "再起動";
+
+/* Cancel button of the relaunch confirmation dialog: nothing is quit. */
+"relaunch.confirm.cancel" = "キャンセル";
+
+/* Popover, small text under an app row while a relaunch is in progress: the app was asked to quit and has not quit yet. May wrap onto two lines (360 pt wide popover). */
+"relaunch.status.waiting" = "終了を待っています…（アプリが保存の確認を表示している場合があります）";
+
+/* Link-style button under the "Waiting for the app to quit…" text. Gives up waiting; the app is not reopened. */
+"relaunch.status.stopWaiting" = "待つのをやめる";
+
+/* Tooltip of the "Stop waiting" button. Explains that the app is left alone: it is not force-quit and is not reopened if it quits later. */
+"relaunch.status.stopWaitingHelp" = "アプリは強制終了されず、終了しても開き直しません";
+
+/* Link-style button at the right of a relaunch result message. Removes the message. Shares the row with the message; keep it short. */
+"relaunch.status.dismiss" = "閉じる";
+
+/* A relaunch status message prefixed with the app's name, used for apps no longer in the lists above. %1$@ = the name of the app. %2$@ = the status message, a complete sentence (one of the relaunch.status / relaunch.result texts). Only the punctuation and order are yours to change. */
+"relaunch.status.withAppName" = "%1$@: %2$@";
+
+/* Popover, result of a relaunch attempt: by the time the button was confirmed, the app was no longer running (or its process id now belongs to another program), so nothing was quit. Wraps onto several lines. */
+"relaunch.result.notRunning" = "アプリは既に終了しているか別のアプリに置き換わっているため、何もしませんでした。";
+
+/* Popover, result of a relaunch attempt that failed before anything was quit. %@ = the reason, a complete sentence from the relaunch.error texts. Wraps onto several lines. */
+"relaunch.result.failed" = "再起動できませんでした（アプリは終了していません）: %@";
+
+/* Popover, result after the user pressed "Stop waiting". The app was never force-quit and will not be reopened. */
+"relaunch.result.stoppedWaiting" = "待つのをやめました。アプリはまだ終了していない場合があり、終了しても開き直しません。";
+
+/* Popover, result when the app did not quit within the time limit of 5 minutes (the number is fixed in the app). "MemorySaver" is the product name. Long: wraps onto several lines. */
+"relaunch.result.waitTimedOut" = "5分待ちましたが終了しなかったため、待つのをやめました。あとでアプリが終了しても自動では開き直さないので、必要なら手動で開いてください。";
+
+/* Popover, result when the app quit but could not be started again. %@ = the system's description of the error (in the user's system language, not controlled by this file). */
+"relaunch.result.quitButNotReopened" = "終了しましたが、開き直せませんでした（%@）。手動で開いてください。";
+
+/* Reason shown inside the "Couldn't relaunch" message (relaunch.result.failed): the app is a system component or has no app bundle to reopen. A complete sentence with a final full stop. */
+"relaunch.error.unsupported" = "このアプリは再起動できません。";
+
+/* Reason shown inside the "Couldn't relaunch" message (relaunch.result.failed): the app file was moved or deleted, so nothing was quit. A complete sentence with a final full stop. */
+"relaunch.error.appNotFound" = "アプリの場所が見つからないため、終了せずに中止しました。";
+
+/* Reason shown inside the "Couldn't relaunch" message (relaunch.result.failed): the system could not deliver the request to quit to the app. A complete sentence with a final full stop. */
+"relaunch.error.quitRefused" = "アプリに終了を要求できませんでした。";
+
+
+/* ==== Growth ==== */
+
+/* Tooltip on an app's growth figure (the "+620 MB" under its memory amount). %@ = the growth, already formatted with a plus sign and unit (e.g. "+620 MB"). The baseline is the app's size shortly after it launched. */
+"growth.sinceLaunch" = "起動直後より %@";
+
+/* Tooltip on WindowServer's growth figure. %@ = the growth, already formatted with a plus sign and unit (e.g. "+620 MB"). The baseline is its size when the Mac started up. */
+"growth.sinceStartup" = "起動時より %@";
+
+/* Tooltip on a growth figure for an app that was already running when MemorySaver started measuring. %@ = the growth, already formatted with a plus sign and unit (e.g. "+620 MB"). The baseline is its size when MemorySaver first saw it. */
+"growth.sinceMonitoringBegan" = "監視開始時より %@";
+
+
+/* ==== Icon legend ==== */
+
+/* Tooltip of the question-mark button at the bottom right of the popover, which opens the icon legend. */
+"legend.button.help" = "アイコンの説明";
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the question-mark button that opens the icon legend. */
+"legend.button.accessibilityLabel" = "アイコンの説明";
+
+/* Icon legend: small grey heading above the explanations of the menu bar icon's states. */
+"legend.section.menuBar" = "メニューバーのアイコン";
+
+/* Icon legend: explains the plain memory-chip icon in the menu bar. The legend is 300 pt wide, with the icon at the left, so text wraps early; keep it short. */
+"legend.menuBar.normal" = "正常。再起動の提案はありません";
+
+/* Icon legend: explains the menu bar icon drawn filled with a small orange dot. The parenthesis describes how the icon looks; keep it accurate. */
+"legend.menuBar.recommendation" = "再起動すると効果が大きいアプリがあります（塗りつぶし＋オレンジの点）";
+
+/* Icon legend: explains the yellow menu bar icon. "Warning" must match the wording of popover.pressure.warning. The colour is part of the explanation. */
+"legend.menuBar.warning" = "メモリプレッシャーが「警告」です（黄）";
+
+/* Icon legend: explains the red menu bar icon. "Critical" must match the wording of popover.pressure.critical. The colour is part of the explanation. */
+"legend.menuBar.critical" = "メモリプレッシャーが「危険」です（赤）";
+
+/* Icon legend: small grey heading above the explanations of the icons inside the popover ("this window" is the popover). */
+"legend.section.window" = "この画面のアイコン";
+
+/* Icon legend: explains the small right-pointing arrow at the left of each app row in the ranking. */
+"legend.window.expand" = "アプリのプロセス内訳を開く／閉じる（行のどこをクリックしても開閉します）";
+
+/* Icon legend: explains the circular-arrow button in the popover footer. */
+"legend.window.refresh" = "今すぐ測定し直す";
+
+/* Icon legend: explains the gear button in the popover footer. */
+"legend.window.settings" = "設定を開く";
+
+/* Icon legend: explains the power button in the popover footer. "MemorySaver" is the product name and stays as is. */
+"legend.window.quit" = "MemorySaver を終了";
+
+/* Icon legend: small grey heading above the explanation of the figures starting with a plus sign. */
+"legend.section.growth" = "増加量（＋の数字）";
+
+/* Icon legend: explains the growth figures shown under an app's memory amount. "+604 MB" is an example of such a figure. "WindowServer" is the macOS process name and stays as is. Wraps onto several lines. */
+"legend.growth.note" = "メモリ量の下の「+604 MB」などは、起動直後（WindowServer は Mac の起動時）からの増加量です。";
+
+
+/* ==== Settings ==== */
+
+/* Title bar of the settings window. "MemorySaver" is the product name and stays as is. */
+"settings.windowTitle" = "MemorySaver の設定";
+
+/* Settings, heading of the section with the three steppers that decide when an app or WindowServer is flagged. */
+"settings.section.thresholds" = "しきい値";
+
+/* Settings, label of a stepper: an app is suggested for relaunch once it uses at least this much memory. %@ = the amount, already formatted with its unit (e.g. "2 GB"). The window is 440 pt wide; the stepper takes space at the right. */
+"settings.threshold.appFootprint" = "アプリのメモリ: %@ 以上";
+
+/* Settings, label of a stepper: an app is suggested for relaunch once its memory has grown to at least this multiple of its size just after launch. %@ = the factor with one decimal place, formatted for the user's locale (e.g. "1.5"). */
+"settings.threshold.appGrowth" = "起動直後からの増加: %@ 倍以上";
+
+/* Settings, label of a stepper: WindowServer is flagged once its memory has grown by at least this much. %@ = the amount, already formatted with its unit (e.g. "1 GB"). "WindowServer" is the macOS process name and stays as is. */
+"settings.threshold.windowServerGrowth" = "WindowServer の増加: %@ 以上";
+
+/* Settings, heading of the section with the notification and login options. */
+"settings.section.notifications" = "通知";
+
+/* Settings, label of the switch that turns system notifications on or off. */
+"settings.notifications.toggle" = "メモリが逼迫したときに通知する";
+
+/* Settings, orange note under the notifications switch, shown when the user switched notifications on here but macOS refuses them. Use the exact names macOS uses for "System Settings" and its "Notifications" pane. "MemorySaver" is the product name. */
+"settings.notifications.denied" = "システム設定で MemorySaver の通知が許可されていないため、通知は表示されません。システム設定の「通知」から許可してください。";
+
+/* Settings, label of the switch that makes the app start when the user logs in. */
+"settings.launchAtLogin.toggle" = "ログイン時に起動する";
+
+/* Settings, orange note under the "Open at login" switch when changing it failed. %@ = the system's description of the error (in the user's system language). The name of the option must match settings.launchAtLogin.toggle. */
+"settings.launchAtLogin.error" = "ログイン時の起動を変更できませんでした: %@";
+
+/* Settings, heading of the section that lists apps that are never suggested for relaunch. */
+"settings.section.exclusions" = "除外するアプリ";
+
+/* Settings, grey text shown in the excluded apps section while the list is empty. */
+"settings.exclusions.empty" = "除外しているアプリはありません。";
+
+/* Settings, button at the right of an excluded app: takes the app off the list (it can be suggested again). */
+"settings.exclusions.remove" = "削除";
+
+/* Settings, title of the menu button that lists the apps currently running so one can be added to the excluded apps. */
+"settings.exclusions.addMenu" = "実行中のアプリから追加";
+
+
+/* ==== Menu bar ==== */
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the app's icon in the menu bar. */
+"menuBar.accessibilityLabel" = "メモリ監視";
+
+
+/* ==== Notification ==== */
+
+/* Title of the system notification posted when memory pressure is high and an app or WindowServer is worth acting on. */
+"notification.title" = "メモリが逼迫しています";
+
+/* Body of the system notification, first sentence. %@ = the names of the apps worth relaunching, joined with the list separator (notification.appListSeparator). A complete sentence. */
+"notification.relaunchApps" = "%@ を再起動すると改善する可能性があります。";
+
+/* Body of the system notification, sentence about WindowServer (the macOS process name; it stays as is). It is added after the sentence about apps when both apply. */
+"notification.windowServer" = "WindowServer のメモリが増えています。";
+
+/* Separator placed between app names in a list inside the notification ("Foo, Bar, Baz"). Include any space you need. */
+"notification.appListSeparator" = "、";
+
+/* Separator placed between the sentences of the notification body when it has more than one. Include any space you need (may be empty in languages that do not separate sentences with a space; a single space is the value here). */
+"notification.sentenceSeparator" = " ";
+
+
+/* ==== Errors ==== */
+
+/* Popover, orange line above the footer, shown instead of any data when the history database could not be opened. %@ = the system's description of the error (in the user's system language). The line is about 330 pt wide and may wrap. */
+"error.historyOpenFailed" = "履歴データベースを開けませんでした: %@";
+
+/* Popover, orange line above the footer: the history database could not be used, so measurements are kept in memory only until the app quits. %@ = the system's description of the error. "MemorySaver" is the product name. */
+"error.historyUnsaved" = "履歴を保存できません（今回の起動中のみ記録します）: %@";
+
+/* Popover, orange line above the footer: the memory measurement itself failed. %@ = the system's description of the error. */
+"error.memoryReadFailed" = "メモリ情報を取得できませんでした: %@";
+
+/* Popover, orange line above the footer: current numbers are shown, but saving or reading the history failed. %@ = the system's description of the error. */
+"error.historyAccessFailed" = "履歴を保存・参照できませんでした: %@";

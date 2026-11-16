@@ -40,6 +40,12 @@ public struct SettingsView: View {
             Section(tr(.settingsSectionExclusions)) {
                 ExclusionList(viewModel: viewModel)
             }
+            // Read from the app bundle, so it is absent when running outside one (tests, `swift run`).
+            if let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+                Section {
+                    LabeledContent(tr(.settingsVersion), value: version)
+                }
+            }
         }
         .formStyle(.grouped)
         .frame(width: 440, height: 520)

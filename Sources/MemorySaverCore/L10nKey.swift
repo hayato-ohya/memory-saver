@@ -96,6 +96,7 @@ public enum L10nKey: String, CaseIterable, Sendable {
     case settingsExclusionsEmpty = "settings.exclusions.empty"
     case settingsExclusionsRemove = "settings.exclusions.remove"
     case settingsExclusionsAddMenu = "settings.exclusions.addMenu"
+    case settingsVersion = "settings.version"
 
     // MARK: Menu bar
     case menuBarAccessibilityLabel = "menuBar.accessibilityLabel"

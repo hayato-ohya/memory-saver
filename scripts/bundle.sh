@@ -2,6 +2,9 @@
 # Builds the release executable and wraps it into dist/MemorySaver.app (ad-hoc signed).
 set -euo pipefail
 
+# The version shown to users (Settings, Finder's Get Info). Bump it for each release.
+VERSION="0.1"
+
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
@@ -16,7 +19,7 @@ cp "$ROOT/.build/release/MemorySaver" "$APP/Contents/MacOS/MemorySaver"
 TRANSLATIONS="MemorySaver_MemorySaverCore.bundle"
 cp -R "$ROOT/.build/release/$TRANSLATIONS" "$APP/Contents/Resources/$TRANSLATIONS"
 
-cat > "$APP/Contents/Info.plist" <<'PLIST'
+cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -34,7 +37,7 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
     <key>CFBundleExecutable</key>
     <string>MemorySaver</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.1.0</string>
+    <string>$VERSION</string>
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>CFBundlePackageType</key>

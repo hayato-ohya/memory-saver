@@ -24,6 +24,17 @@ Memory that macOS can reclaim on its own, such as file cache, is left alone. Wha
 - macOS 14 or later
 - Xcode with Swift 6, or a Swift 6 toolchain (to build)
 
+## Download
+
+Get `MemorySaver-0.1.zip` from [Releases](https://github.com/hayato-ohya/memory-saver/releases), unzip it, and move `MemorySaver.app` to the Applications folder. The build is for Apple silicon Macs.
+
+The app is not notarized by Apple, so macOS blocks it the first time you open it. To allow it:
+
+1. Open `MemorySaver.app`. When macOS says it cannot verify the app, click **Done**.
+2. In **System Settings > Privacy & Security**, find the message about MemorySaver and click **Open Anyway**, then confirm.
+
+You can also build it yourself, as described below.
+
 ## Build and run
 
 ```sh

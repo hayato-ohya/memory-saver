@@ -261,6 +261,9 @@
 /* Settings, title of the menu button that lists the apps currently running so one can be added to the excluded apps. */
 "settings.exclusions.addMenu" = "Add from running apps";
 
+/* Settings window, last row: label next to the app's version number (e.g. "0.1"). One short word. */
+"settings.version" = "Version";
+
 
 /* ==== Menu bar ==== */
 

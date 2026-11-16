@@ -24,6 +24,17 @@
 - macOS 14以降
 - ビルドには、Swift 6を含むXcode、またはSwift 6のツールチェーン
 
+## ダウンロード
+
+[Releases](https://github.com/hayato-ohya/memory-saver/releases) から `MemorySaver-0.1.zip` をダウンロードして展開し、`MemorySaver.app` を「アプリケーション」フォルダに移動してください。Appleシリコン搭載のMac向けです。
+
+このアプリはAppleの公証を受けていないため、初めて開くときにmacOSに止められます。次の手順で許可してください。
+
+1. `MemorySaver.app` を開きます。「検証できません」という確認が出たら「完了」をクリックします。
+2. 「システム設定 > プライバシーとセキュリティ」に表示されるMemorySaverについてのメッセージで「このまま開く」をクリックし、確認に答えます。
+
+下の手順で、自分でビルドすることもできます。
+
 ## ビルドと起動
 
 ```sh

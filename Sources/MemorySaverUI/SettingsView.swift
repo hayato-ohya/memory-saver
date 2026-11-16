@@ -4,8 +4,12 @@ import MemorySaverCore
 
 public struct SettingsView: View {
     let viewModel: MonitorViewModel
+    let version: String?
 
-    public init(viewModel: MonitorViewModel) { self.viewModel = viewModel }
+    public init(viewModel: MonitorViewModel, version: String? = AppVersion.current) {
+        self.viewModel = viewModel
+        self.version = version
+    }
 
     public var body: some View {
         @Bindable var settings = viewModel.settings
@@ -40,8 +44,7 @@ public struct SettingsView: View {
             Section(tr(.settingsSectionExclusions)) {
                 ExclusionList(viewModel: viewModel)
             }
-            // Read from the app bundle, so it is absent when running outside one (tests, `swift run`).
-            if let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+            if let version {
                 Section {
                     LabeledContent(tr(.settingsVersion), value: version)
                 }
@@ -96,5 +99,12 @@ private struct ExclusionList: View {
             }
         }
         .disabled(candidates.isEmpty)
+    }
+}
+
+public enum AppVersion {
+    /// Read from the app bundle, so it is nil when running outside one (tests, `swift run`).
+    public static var current: String? {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
     }
 }

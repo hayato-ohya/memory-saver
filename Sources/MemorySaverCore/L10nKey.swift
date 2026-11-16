@@ -80,6 +80,7 @@ public enum L10nKey: String, CaseIterable, Sendable {
     case legendWindowQuit = "legend.window.quit"
     case legendSectionGrowth = "legend.section.growth"
     case legendGrowthNote = "legend.growth.note"
+    case legendVersion = "legend.version"
 
     // MARK: Settings
     case settingsWindowTitle = "settings.windowTitle"

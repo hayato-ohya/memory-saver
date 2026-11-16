@@ -198,6 +198,9 @@
 /* Icon legend: explains the growth figures shown under an app's memory amount. "+604 MB" is an example of such a figure. "WindowServer" is the macOS process name and stays as is. Wraps onto several lines. */
 "legend.growth.note" = "メモリ量の下の「+604 MB」などは、起動直後（WindowServer は Mac の起動時）からの増加量です。";
 
+/* Help popup, last line in small grey text. Argument: the version number, e.g. "0.1". "MemorySaver" is the product name and stays as is. */
+"legend.version" = "MemorySaver バージョン %@";
+
 
 /* ==== Settings ==== */
 

@@ -13,6 +13,8 @@ struct IconLegendButton: View {
 }
 
 struct IconLegend: View {
+    var version: String? = AppVersion.current
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             section(tr(.legendSectionMenuBar)) {
@@ -39,6 +41,11 @@ struct IconLegend: View {
             Divider()
             section(tr(.legendSectionGrowth)) {
                 note(tr(.legendGrowthNote))
+            }
+            if let version {
+                Divider()
+                Text(tr(.legendVersion, version))
+                    .font(.caption).foregroundStyle(.secondary)
             }
         }
         .padding(14)

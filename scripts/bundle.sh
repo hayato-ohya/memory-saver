@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # The version shown to users (Settings, Finder's Get Info). Bump it for each release.
-VERSION="0.1"
+VERSION="0.1.1"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"

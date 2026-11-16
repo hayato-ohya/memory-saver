@@ -26,7 +26,7 @@ Memory that macOS can reclaim on its own, such as file cache, is left alone. Wha
 
 ## Download
 
-Get `MemorySaver-0.1.zip` from [Releases](https://github.com/hayato-ohya/memory-saver/releases), unzip it, and move `MemorySaver.app` to the Applications folder. The build is for Apple silicon Macs.
+Download the zip file from the [latest release](https://github.com/hayato-ohya/memory-saver/releases/latest), unzip it, and move `MemorySaver.app` to the Applications folder. The build is for Apple silicon Macs.
 
 The app is not notarized by Apple, so macOS blocks it the first time you open it. To allow it:
 

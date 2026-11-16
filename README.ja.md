@@ -26,7 +26,7 @@
 
 ## ダウンロード
 
-[Releases](https://github.com/hayato-ohya/memory-saver/releases) から `MemorySaver-0.1.zip` をダウンロードして展開し、`MemorySaver.app` を「アプリケーション」フォルダに移動してください。Appleシリコン搭載のMac向けです。
+[最新のリリース](https://github.com/hayato-ohya/memory-saver/releases/latest) からzipファイルをダウンロードして展開し、`MemorySaver.app` を「アプリケーション」フォルダに移動してください。Appleシリコン搭載のMac向けです。
 
 このアプリはAppleの公証を受けていないため、初めて開くときにmacOSに止められます。次の手順で許可してください。
 

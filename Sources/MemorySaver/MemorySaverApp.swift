@@ -52,6 +52,8 @@ final class AppModel {
         }
         viewModel.lastError = storeWarning
 
+        viewModel.historyLoader = { series, since in try store.history(series: series, since: since) }
+
         let persistentWarning = storeWarning
         let engine = MonitorEngine(
             dependencies: .init(

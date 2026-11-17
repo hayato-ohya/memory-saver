@@ -67,16 +67,16 @@
 "popover.ranking.title" = "Memory by app (top 10)";
 
 /* Popover, small grey line under the ranking headline. Explains that clicking an app row shows the processes that belong to the app. One line. */
-"popover.ranking.hint" = "Click a row to see its processes";
+"popover.ranking.hint" = "Click a row to see its memory over time and processes";
 
 /* Tooltip of an app row in the ranking while its process list is open. Clicking the row closes the list. */
-"popover.ranking.rowHelp.hide" = "Hide processes";
+"popover.ranking.rowHelp.hide" = "Hide history and processes";
 
 /* Tooltip of an app row in the ranking while its process list is closed. Clicking the row opens the list. */
-"popover.ranking.rowHelp.show" = "Show processes";
+"popover.ranking.rowHelp.show" = "Show history and processes";
 
 /* Accessibility hint (read aloud by VoiceOver, not shown) of an app row in the ranking. Describes what activating the row does. */
-"popover.ranking.rowHint" = "Shows or hides the app's processes";
+"popover.ranking.rowHint" = "Shows or hides the app's memory over time and processes";
 
 
 /* ==== Popover: footer ==== */
@@ -199,7 +199,7 @@
 "legend.section.window" = "Icons in this window";
 
 /* Icon legend: explains the small right-pointing arrow at the left of each app row in the ranking. */
-"legend.window.expand" = "Show or hide an app's processes (click anywhere on the row).";
+"legend.window.expand" = "Show or hide memory over time and processes (click anywhere on the row).";
 
 /* Icon legend: explains the circular-arrow button in the popover footer. */
 "legend.window.refresh" = "Measure again now";
@@ -218,6 +218,33 @@
 
 /* Help popup, last line in small grey text. Argument: the version number, e.g. "0.1". "MemorySaver" is the product name and stays as is. */
 "legend.version" = "MemorySaver version %@";
+
+/* Heading above the memory-over-time chart, shown when an app or WindowServer row is opened. */
+"chart.title" = "Memory over time";
+
+/* Segmented control choice: show the last 24 hours in the chart. Keep it very short. */
+"chart.range.day" = "24 hours";
+
+/* Segmented control choice: show the last 7 days in the chart. Keep it very short. */
+"chart.range.week" = "7 days";
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the 24 hours / 7 days control. */
+"chart.range.accessibilityLabel" = "Period";
+
+/* Small label on the dashed line in the chart that marks the baseline the growth is measured from. Keep it very short. */
+"chart.baseline" = "Baseline";
+
+/* Shown in place of the chart when fewer than two samples have been recorded in the selected period. */
+"chart.notEnoughHistory" = "Not enough history yet";
+
+/* Tooltip of the WindowServer row while its chart is closed. Clicking the row opens it. */
+"chart.help.show" = "Show memory over time";
+
+/* Tooltip of the WindowServer row while its chart is open. Clicking the row closes it. */
+"chart.help.hide" = "Hide memory over time";
+
+/* Accessibility hint (read aloud by VoiceOver, not shown) of the WindowServer row. Describes what activating the row does. */
+"chart.accessibilityHint" = "Shows or hides WindowServer's memory over time";
 
 
 /* ==== Settings ==== */

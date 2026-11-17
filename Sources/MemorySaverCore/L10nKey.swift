@@ -82,6 +82,17 @@ public enum L10nKey: String, CaseIterable, Sendable {
     case legendGrowthNote = "legend.growth.note"
     case legendVersion = "legend.version"
 
+    // MARK: History chart
+    case chartTitle = "chart.title"
+    case chartRangeDay = "chart.range.day"
+    case chartRangeWeek = "chart.range.week"
+    case chartRangeAccessibilityLabel = "chart.range.accessibilityLabel"
+    case chartBaseline = "chart.baseline"
+    case chartNotEnoughHistory = "chart.notEnoughHistory"
+    case chartHelpShow = "chart.help.show"
+    case chartHelpHide = "chart.help.hide"
+    case chartAccessibilityHint = "chart.accessibilityHint"
+
     // MARK: Settings
     case settingsWindowTitle = "settings.windowTitle"
     case settingsSectionThresholds = "settings.section.thresholds"

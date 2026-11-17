@@ -49,16 +49,16 @@
 "popover.ranking.title" = "アプリ別メモリ（上位10）";
 
 /* Popover, small grey line under the ranking headline. Explains that clicking an app row shows the processes that belong to the app. One line. */
-"popover.ranking.hint" = "行をクリックするとプロセスの内訳を表示します";
+"popover.ranking.hint" = "行をクリックするとメモリの推移とプロセスの内訳を表示します";
 
 /* Tooltip of an app row in the ranking while its process list is open. Clicking the row closes the list. */
-"popover.ranking.rowHelp.hide" = "プロセスの内訳を閉じる";
+"popover.ranking.rowHelp.hide" = "推移と内訳を閉じる";
 
 /* Tooltip of an app row in the ranking while its process list is closed. Clicking the row opens the list. */
-"popover.ranking.rowHelp.show" = "プロセスの内訳を表示";
+"popover.ranking.rowHelp.show" = "推移と内訳を表示";
 
 /* Accessibility hint (read aloud by VoiceOver, not shown) of an app row in the ranking. Describes what activating the row does. */
-"popover.ranking.rowHint" = "プロセスの内訳を開閉します";
+"popover.ranking.rowHint" = "メモリの推移とプロセスの内訳を開閉します";
 
 
 /* ==== Popover: footer ==== */
@@ -181,7 +181,7 @@
 "legend.section.window" = "この画面のアイコン";
 
 /* Icon legend: explains the small right-pointing arrow at the left of each app row in the ranking. */
-"legend.window.expand" = "アプリのプロセス内訳を開く／閉じる（行のどこをクリックしても開閉します）";
+"legend.window.expand" = "メモリの推移とプロセスの内訳を開く／閉じる（行のどこをクリックしても開閉します）";
 
 /* Icon legend: explains the circular-arrow button in the popover footer. */
 "legend.window.refresh" = "今すぐ測定し直す";
@@ -200,6 +200,33 @@
 
 /* Help popup, last line in small grey text. Argument: the version number, e.g. "0.1". "MemorySaver" is the product name and stays as is. */
 "legend.version" = "MemorySaver バージョン %@";
+
+/* Heading above the memory-over-time chart, shown when an app or WindowServer row is opened. */
+"chart.title" = "メモリの推移";
+
+/* Segmented control choice: show the last 24 hours in the chart. Keep it very short. */
+"chart.range.day" = "24時間";
+
+/* Segmented control choice: show the last 7 days in the chart. Keep it very short. */
+"chart.range.week" = "7日";
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the 24 hours / 7 days control. */
+"chart.range.accessibilityLabel" = "表示する期間";
+
+/* Small label on the dashed line in the chart that marks the baseline the growth is measured from. Keep it very short. */
+"chart.baseline" = "基準";
+
+/* Shown in place of the chart when fewer than two samples have been recorded in the selected period. */
+"chart.notEnoughHistory" = "まだ記録が足りません";
+
+/* Tooltip of the WindowServer row while its chart is closed. Clicking the row opens it. */
+"chart.help.show" = "メモリの推移を表示";
+
+/* Tooltip of the WindowServer row while its chart is open. Clicking the row closes it. */
+"chart.help.hide" = "メモリの推移を閉じる";
+
+/* Accessibility hint (read aloud by VoiceOver, not shown) of the WindowServer row. Describes what activating the row does. */
+"chart.accessibilityHint" = "メモリの推移を開閉します";
 
 
 /* ==== Settings ==== */

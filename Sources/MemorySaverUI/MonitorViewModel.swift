@@ -23,6 +23,8 @@ public final class MonitorViewModel {
 
     /// Set by the engine; called by the refresh button.
     @ObservationIgnored public var onRefreshRequested: (() -> Void)?
+    /// Set by the app; read by the history charts. Without it the charts stay empty.
+    @ObservationIgnored public var historyLoader: HistoryLoader?
 
     public let settings: SettingsStore
     /// Keyed by app id.
@@ -33,6 +35,8 @@ public final class MonitorViewModel {
 
     /// Apps whose process breakdown is open in the ranking.
     public private(set) var expandedAppIDs: Set<String> = []
+    /// Whether WindowServer's history chart is open.
+    public private(set) var isWindowServerExpanded = false
 
     @ObservationIgnored private let relauncher: AppRelauncher
     @ObservationIgnored private let followUpRefreshDelay: Duration
@@ -65,6 +69,8 @@ public final class MonitorViewModel {
     public func toggleExpanded(_ appID: String) {
         if !expandedAppIDs.insert(appID).inserted { expandedAppIDs.remove(appID) }
     }
+
+    public func toggleWindowServerExpanded() { isWindowServerExpanded.toggle() }
 
     public func showSettings() { settingsPresenter.show(viewModel: self) }
 

@@ -8,6 +8,7 @@ public struct PopoverView: View {
     @State private var contentHeight: CGFloat = Self.maxContentHeight
 
     private static let maxContentHeight: CGFloat = 520
+    private static let margin: CGFloat = 14
 
     public init(viewModel: MonitorViewModel) { self.viewModel = viewModel }
 
@@ -23,9 +24,12 @@ public struct PopoverView: View {
                         RecommendationsSection(viewModel: viewModel, pendingRelaunch: $pendingRelaunch)
                         RankingSection(viewModel: viewModel, snapshot: snapshot, pendingRelaunch: $pendingRelaunch)
                     }
-                    .padding(.trailing, 4)
+                    // Together with the negative padding below, this moves the scroll bar out
+                    // into the window's margin, so it never covers the numbers.
+                    .padding(.trailing, Self.margin)
                     .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { contentHeight = $0 }
                 }
+                .padding(.trailing, -Self.margin)
                 // A ScrollView has no height of its own in a menu bar window, so it takes its
                 // content's height up to the cap.
                 .frame(height: min(contentHeight, Self.maxContentHeight))
@@ -49,7 +53,7 @@ public struct PopoverView: View {
             Divider()
             Footer(viewModel: viewModel)
         }
-        .padding(14)
+        .padding(Self.margin)
         .frame(width: 360)
         .confirmationDialog(
             pendingRelaunch.map { tr(.relaunchConfirmTitle, $0.displayName) } ?? "",
@@ -118,17 +122,32 @@ private struct WindowServerSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                if let bytes = snapshot.windowServerBytes {
-                    let baseline = viewModel.windowServerBaseline
-                    SizeRowLabels(
-                        title: Text("WindowServer").font(.headline),
-                        subtitle: nil, bytes: bytes, baseline: baseline, subject: .windowServer)
-                } else {
-                    Text("WindowServer").font(.headline)
-                    Spacer()
-                    Text(tr(.popoverWindowServerUnavailable)).foregroundStyle(.secondary)
+            Button {
+                viewModel.toggleWindowServerExpanded()
+            } label: {
+                HStack {
+                    DisclosureChevron(isExpanded: viewModel.isWindowServerExpanded)
+                    if let bytes = snapshot.windowServerBytes {
+                        let baseline = viewModel.windowServerBaseline
+                        SizeRowLabels(
+                            title: Text("WindowServer").font(.headline),
+                            subtitle: nil, bytes: bytes, baseline: baseline, subject: .windowServer)
+                    } else {
+                        Text("WindowServer").font(.headline)
+                        Spacer()
+                        Text(tr(.popoverWindowServerUnavailable)).foregroundStyle(.secondary)
+                    }
                 }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .help(viewModel.isWindowServerExpanded ? tr(.chartHelpHide) : tr(.chartHelpShow))
+            .accessibilityHint(tr(.chartAccessibilityHint))
+            if viewModel.isWindowServerExpanded {
+                HistoryChart(
+                    series: .windowServer, baseline: viewModel.windowServerBaseline,
+                    loader: viewModel.historyLoader, refreshToken: snapshot.timestamp, leadingInset: 20)
+                    .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 6))
             }
             if let suspects {
                 Text(tr(.popoverWindowServerSuspectsTitle))
@@ -246,7 +265,14 @@ private struct RankingSection: View {
                         RelaunchStatus(viewModel: viewModel, appID: app.id)
                     }
                     if isExpanded {
-                        ProcessBreakdown(processes: app.processes)
+                        VStack(alignment: .leading, spacing: 0) {
+                            HistoryChart(
+                                series: .app(id: app.id), baseline: viewModel.appBaselines[app.id],
+                                loader: viewModel.historyLoader, refreshToken: snapshot.timestamp)
+                            Divider().padding(.leading, 46).padding(.trailing, 8)
+                            ProcessBreakdown(processes: app.processes)
+                        }
+                        .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 6))
                     }
                 }
             }
@@ -261,10 +287,7 @@ private struct AppRow: View {
 
     var body: some View {
         HStack {
-            Image(systemName: "chevron.right")
-                .font(.caption.weight(.semibold)).foregroundStyle(.secondary)
-                .rotationEffect(.degrees(isExpanded ? 90 : 0))
-                .frame(width: 12)
+            DisclosureChevron(isExpanded: isExpanded)
             AppIcon(url: app.bundleURL)
             SizeRowLabels(
                 title: Text(app.displayName),
@@ -324,7 +347,17 @@ private struct ProcessBreakdown: View {
         }
         .font(.caption).foregroundStyle(.secondary)
         .padding(.vertical, 4).padding(.leading, 46).padding(.trailing, 8)
-        .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 6))
+    }
+}
+
+private struct DisclosureChevron: View {
+    let isExpanded: Bool
+
+    var body: some View {
+        Image(systemName: "chevron.right")
+            .font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+            .rotationEffect(.degrees(isExpanded ? 90 : 0))
+            .frame(width: 12)
     }
 }
 

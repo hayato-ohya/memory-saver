@@ -40,6 +40,18 @@ public struct SettingsView: View {
                 if let error = settings.launchAtLoginError {
                     Text(error).font(.caption).foregroundStyle(.orange)
                 }
+                if settings.launchAtLoginStatus == .needsApproval {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(tr(.settingsLaunchAtLoginNeedsApproval))
+                            .font(.caption).foregroundStyle(.orange)
+                        Button(tr(.settingsLaunchAtLoginOpenSettings)) { settings.openLoginItemsSettings() }
+                            .controlSize(.small)
+                    }
+                }
+                if settings.launchAtLoginOutsideApplications {
+                    Text(tr(.settingsLaunchAtLoginOutsideApplications))
+                        .font(.caption).foregroundStyle(.orange)
+                }
             }
             Section(tr(.settingsSectionExclusions)) {
                 ExclusionList(viewModel: viewModel)
@@ -52,9 +64,13 @@ public struct SettingsView: View {
         }
         .formStyle(.grouped)
         .frame(width: 440, height: 520)
-        .task { await viewModel.refreshNotificationStatus() }
-        // The user may have just changed the permission in System Settings.
+        .task {
+            settings.refreshLaunchAtLogin()
+            await viewModel.refreshNotificationStatus()
+        }
+        // The user may have just changed the permission or the login item in System Settings.
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            settings.refreshLaunchAtLogin()
             Task { await viewModel.refreshNotificationStatus() }
         }
     }

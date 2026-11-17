@@ -38,11 +38,13 @@ You can also build it yourself, as described below.
 ## Build and run
 
 ```sh
-./scripts/bundle.sh
-open dist/MemorySaver.app
+./scripts/make-signing-cert.sh   # once; macOS asks for your password
+./scripts/bundle.sh install
 ```
 
-`bundle.sh` builds a release binary and wraps it into `dist/MemorySaver.app`, signed ad hoc for this Mac. The app appears in the menu bar with no Dock icon.
+`bundle.sh` builds a release binary and wraps it into `dist/MemorySaver.app`. With `install`, it also quits the running copy, replaces `/Applications/MemorySaver.app`, and opens it. The app appears in the menu bar with no Dock icon.
+
+`make-signing-cert.sh` creates a self-signed certificate, "MemorySaver Dev", in your login keychain. `bundle.sh` signs with it when it exists, which keeps **Open at login** working across rebuilds. Without it, the app is signed ad hoc, and Open at login stops working each time you rebuild.
 
 Run the tests with:
 
@@ -68,7 +70,7 @@ swift test
 
 - **WindowServer.** Its memory cannot be released directly. Relaunching the suspected apps may help; logging out always brings it back to its starting size.
 - **Reading WindowServer through `top`.** This depends on `top`'s output format, so a future macOS may break that one figure. The rest of the app keeps working.
-- **Open at login.** It breaks when you rebuild, because the ad hoc signature changes and `bundle.sh` replaces the app.
+- **Open at login.** macOS ties it to the app's location and signature. Keep the app in the Applications folder. If you build it yourself, sign it with the certificate from `make-signing-cert.sh`. Settings warns you when the app is outside Applications or when the login item is switched off in System Settings.
 
 ## Adding a language
 

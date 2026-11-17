@@ -252,6 +252,15 @@
 /* Settings, orange note under the "Open at login" switch when changing it failed. %@ = the system's description of the error (in the user's system language). The name of the option must match settings.launchAtLogin.toggle. */
 "settings.launchAtLogin.error" = "Couldn't change Open at login: %@";
 
+/* Settings, orange note under the "Open at login" switch when the login item is registered but switched off (or not yet allowed) in System Settings. Use the exact names macOS uses for "System Settings", "General" and "Login Items". */
+"settings.launchAtLogin.needsApproval" = "MemorySaver won't open at login until you allow it in System Settings > General > Login Items & Extensions.";
+
+/* Settings, small button under settings.launchAtLogin.needsApproval that opens the Login Items pane of System Settings. */
+"settings.launchAtLogin.openSettings" = "Open Login Items";
+
+/* Settings, orange note under the "Open at login" switch when it is on but the app is not in an Applications folder. */
+"settings.launchAtLogin.outsideApplications" = "This copy isn't in an Applications folder, so it stops opening at login once it is moved or rebuilt. Move it to Applications, then turn this on again.";
+
 /* Settings, heading of the section that lists apps that are never suggested for relaunch. */
 "settings.section.exclusions" = "Excluded apps";
 

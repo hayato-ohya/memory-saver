@@ -234,6 +234,15 @@
 /* Settings, orange note under the "Open at login" switch when changing it failed. %@ = the system's description of the error (in the user's system language). The name of the option must match settings.launchAtLogin.toggle. */
 "settings.launchAtLogin.error" = "ログイン時の起動を変更できませんでした: %@";
 
+/* Settings, orange note under the "Open at login" switch when the login item is registered but switched off (or not yet allowed) in System Settings. Use the exact names macOS uses for "System Settings", "General" and "Login Items". */
+"settings.launchAtLogin.needsApproval" = "システム設定で許可されていないため、ログイン時に起動しません。「一般」>「ログイン項目と機能拡張」で MemorySaver をオンにしてください。";
+
+/* Settings, small button under settings.launchAtLogin.needsApproval that opens the Login Items pane of System Settings. */
+"settings.launchAtLogin.openSettings" = "ログイン項目を開く";
+
+/* Settings, orange note under the "Open at login" switch when it is on but the app is not in an Applications folder. */
+"settings.launchAtLogin.outsideApplications" = "このアプリは「アプリケーション」フォルダの外にあります。移動したり作り直したりすると、ログイン時に起動しなくなります。「アプリケーション」フォルダに移してから、もう一度オンにしてください。";
+
 /* Settings, heading of the section that lists apps that are never suggested for relaunch. */
 "settings.section.exclusions" = "除外するアプリ";
 

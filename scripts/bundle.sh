@@ -1,9 +1,22 @@
 #!/bin/bash
-# Builds the release executable and wraps it into dist/MemorySaver.app (ad-hoc signed).
+# Builds the release executable and wraps it into dist/MemorySaver.app.
+#
+#   ./scripts/bundle.sh           build dist/MemorySaver.app
+#   ./scripts/bundle.sh install   also replace /Applications/MemorySaver.app and open it
+#
+# Signs with the "MemorySaver Dev" certificate when it exists (see scripts/make-signing-cert.sh),
+# so that Open at login survives rebuilds and updates. Otherwise signs ad hoc.
 set -euo pipefail
+
+MODE="${1:-build}"
+case "$MODE" in
+    build|install) ;;
+    *) echo "usage: $0 [install]" >&2; exit 2 ;;
+esac
 
 # The version shown to users (Settings, Finder's Get Info). Bump it for each release.
 VERSION="0.1.1"
+BUNDLE_ID="com.memorysaver.app"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
@@ -29,7 +42,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
     <key>CFBundleLocalizations</key>
     <array/>
     <key>CFBundleIdentifier</key>
-    <string>com.memorysaver.app</string>
+    <string>$BUNDLE_ID</string>
     <key>CFBundleName</key>
     <string>MemorySaver</string>
     <key>CFBundleDisplayName</key>
@@ -63,5 +76,37 @@ if [ "$index" -eq 0 ]; then
 fi
 
 plutil -lint "$APP/Contents/Info.plist"
-codesign --force --sign - "$APP"
-echo "Built $APP"
+
+SIGN_IDENTITY="${SIGN_IDENTITY:-}"
+if [ -z "$SIGN_IDENTITY" ]; then
+    if security find-identity -v -p codesigning 2>/dev/null | grep -q '"MemorySaver Dev"'; then
+        SIGN_IDENTITY="MemorySaver Dev"
+    else
+        SIGN_IDENTITY="-"
+        echo "note: signing ad hoc, so Open at login breaks on every rebuild." \
+            "Run scripts/make-signing-cert.sh once to fix that."
+    fi
+fi
+codesign --force --sign "$SIGN_IDENTITY" --identifier "$BUNDLE_ID" --timestamp=none "$APP"
+codesign --verify --strict "$APP"
+echo "Built $APP (signed with: $SIGN_IDENTITY)"
+
+if [ "$MODE" = "install" ]; then
+    INSTALLED="/Applications/MemorySaver.app"
+    # Ask the running copy to quit normally, whichever folder it runs from.
+    if pgrep -xq MemorySaver; then
+        osascript -e "tell application id \"$BUNDLE_ID\" to quit" || true
+        for _ in $(seq 1 50); do
+            pgrep -xq MemorySaver || break
+            sleep 0.1
+        done
+        if pgrep -xq MemorySaver; then
+            echo "error: MemorySaver is still running. Quit it and try again." >&2
+            exit 1
+        fi
+    fi
+    rm -rf "$INSTALLED"
+    ditto "$APP" "$INSTALLED"
+    echo "Installed $INSTALLED"
+    open "$INSTALLED"
+fi

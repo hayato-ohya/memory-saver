@@ -5,13 +5,16 @@ import MemorySaverCore
 
 @MainActor
 final class FakeLoginItem: LoginItemControlling {
-    var isEnabled = false
+    var status = LoginItemStatus.off
+    var isInApplicationsFolder = true
     var fail = false
+    var openedSettings = false
     struct Failure: Error {}
     func setEnabled(_ enabled: Bool) throws {
         if fail { throw Failure() }
-        isEnabled = enabled
+        status = enabled ? .on : .off
     }
+    func openSystemSettings() { openedSettings = true }
 }
 
 func makeDefaults() -> UserDefaults {
@@ -73,4 +76,38 @@ func makeDefaults() -> UserDefaults {
         #expect(store.launchAtLogin)
         #expect(store.launchAtLoginError != nil)
     }
+
+    @Test func needsApprovalCountsAsOnAndIsRefreshed() {
+        let login = FakeLoginItem()
+        let store = SettingsStore(defaults: makeDefaults(), loginItem: login)
+        #expect(store.launchAtLoginStatus == .off)
+        login.status = .needsApproval  // switched off in System Settings
+        store.refreshLaunchAtLogin()
+        #expect(store.launchAtLoginStatus == .needsApproval)
+        #expect(store.launchAtLogin)
+        store.openLoginItemsSettings()
+        #expect(login.openedSettings)
+    }
+
+    @Test func outsideApplicationsWarnsOnlyWhenOn() {
+        let login = FakeLoginItem()
+        login.isInApplicationsFolder = false
+        let store = SettingsStore(defaults: makeDefaults(), loginItem: login)
+        #expect(!store.launchAtLoginOutsideApplications)
+        store.setLaunchAtLogin(true)
+        #expect(store.launchAtLoginOutsideApplications)
+    }
+}
+
+@Test func applicationsFolderDetection() {
+    let home = URL(fileURLWithPath: "/Users/someone")
+    func check(_ path: String) -> Bool {
+        SystemLoginItem.isInApplicationsFolder(URL(fileURLWithPath: path), home: home)
+    }
+    #expect(check("/Applications/MemorySaver.app"))
+    #expect(check("/Applications/Utilities/MemorySaver.app"))
+    #expect(check("/Users/someone/Applications/MemorySaver.app"))
+    #expect(!check("/Users/someone/git/memory-saver/dist/MemorySaver.app"))
+    #expect(!check("/ApplicationsOld/MemorySaver.app"))
+    #expect(!check("/Users/someone/Downloads/MemorySaver.app"))
 }

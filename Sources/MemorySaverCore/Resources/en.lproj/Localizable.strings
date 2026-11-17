@@ -55,12 +55,6 @@
 "popover.windowServer.suspectsNote" = "This is an estimate, since the exact breakdown isn't available. Relaunching these apps may reduce WindowServer memory.";
 
 
-/* ==== Popover: recommendations ==== */
-
-/* Popover, headline of the section that lists apps worth relaunching to get their memory back. One line. */
-"popover.recommendations.title" = "Suggested relaunches";
-
-
 /* ==== Popover: ranking ==== */
 
 /* Popover, headline of the list of apps ordered by memory use. The list always shows the ten largest apps; the number is part of the text. One line. */

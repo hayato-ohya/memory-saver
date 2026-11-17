@@ -37,12 +37,6 @@
 "popover.windowServer.suspectsNote" = "正確な内訳は取得できないため推定です。これらのアプリを再起動すると WindowServer のメモリが減る場合があります。";
 
 
-/* ==== Popover: recommendations ==== */
-
-/* Popover, headline of the section that lists apps worth relaunching to get their memory back. One line. */
-"popover.recommendations.title" = "再起動をおすすめ";
-
-
 /* ==== Popover: ranking ==== */
 
 /* Popover, headline of the list of apps ordered by memory use. The list always shows the ten largest apps; the number is part of the text. One line. */

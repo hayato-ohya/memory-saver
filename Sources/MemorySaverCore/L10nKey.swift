@@ -19,9 +19,6 @@ public enum L10nKey: String, CaseIterable, Sendable {
     case popoverWindowServerWindowCount = "popover.windowServer.windowCount"
     case popoverWindowServerSuspectsNote = "popover.windowServer.suspectsNote"
 
-    // MARK: Popover: recommendations
-    case popoverRecommendationsTitle = "popover.recommendations.title"
-
     // MARK: Popover: ranking
     case popoverRankingTitle = "popover.ranking.title"
     case popoverRankingHint = "popover.ranking.hint"

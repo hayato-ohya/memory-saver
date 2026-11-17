@@ -10,7 +10,7 @@ Memory that macOS can reclaim on its own, such as file cache, is left alone. Wha
 
 - **Memory overview.** Shows used memory, memory pressure, swap, and WindowServer's memory.
 - **Per-app memory.** Each app's helper processes are counted toward the app, the same way Activity Monitor groups them. For example, every Brave renderer counts toward Brave. Click a row to see its memory over time and its processes.
-- **Relaunch suggestions.** Suggests relaunching an app when it uses at least 2 GB and has grown to at least 1.5 times its size shortly after launch. Both thresholds can be changed in Settings.
+- **Relaunch suggestions.** When an app uses at least 2 GB and has grown to at least 1.5 times its size shortly after launch, its growth in the app list turns orange to suggest relaunching it. Both thresholds can be changed in Settings.
 - **WindowServer.** Shows how much WindowServer has grown since login, and which apps' windows are the likely cause.
 - **Memory over time.** Click an app, WindowServer, or the memory summary at the top to see a chart of the last 24 hours or 7 days, with the baseline marked.
 - **Relaunch on a click only.**

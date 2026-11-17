@@ -21,7 +21,6 @@ public struct PopoverView: View {
                         Divider()
                         WindowServerSection(viewModel: viewModel, snapshot: snapshot)
                         OrphanedRelaunchStatuses(viewModel: viewModel, snapshot: snapshot)
-                        RecommendationsSection(viewModel: viewModel, pendingRelaunch: $pendingRelaunch)
                         RankingSection(viewModel: viewModel, snapshot: snapshot, pendingRelaunch: $pendingRelaunch)
                     }
                     // Together with the negative padding below, this moves the scroll bar out
@@ -204,49 +203,6 @@ private struct WindowServerSection: View {
     }
 }
 
-// MARK: - Recommendations
-
-private struct RecommendationsSection: View {
-    let viewModel: MonitorViewModel
-    @Binding var pendingRelaunch: AppMemoryUsage?
-
-    var body: some View {
-        let items = viewModel.recommendations.compactMap { rec -> (AppMemoryUsage, Baseline)? in
-            if case .relaunchApp(let app, let baseline) = rec { return (app, baseline) }
-            return nil
-        }
-        if !items.isEmpty {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(tr(.popoverRecommendationsTitle)).font(.headline)
-                ForEach(items, id: \.0.id) { app, baseline in
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack {
-                            AppIcon(url: app.bundleURL)
-                            VStack(alignment: .leading) {
-                                Text(app.displayName)
-                                HStack(spacing: 6) {
-                                    Text(ByteFormat.string(app.footprintBytes)).monospacedDigit()
-                                    if let growth = ByteFormat.growth(of: app.footprintBytes, over: baseline.bytes) {
-                                        Text(growth).monospacedDigit().foregroundStyle(.orange)
-                                            .help(GrowthLabel.text(
-                                                bytes: app.footprintBytes, baseline: baseline, subject: .app) ?? "")
-                                    }
-                                }
-                                .font(.caption).foregroundStyle(.secondary)
-                            }
-                            Spacer()
-                            RelaunchControl(
-                                viewModel: viewModel, app: app, prominent: true,
-                                pendingRelaunch: $pendingRelaunch)
-                        }
-                        RelaunchStatus(viewModel: viewModel, appID: app.id)
-                    }
-                }
-            }
-        }
-    }
-}
-
 // MARK: - Ranking
 
 private struct RankingSection: View {
@@ -262,14 +218,16 @@ private struct RankingSection: View {
                     .font(.caption).foregroundStyle(.secondary)
             }
             let recommendedIDs = viewModel.recommendedAppIDs
-            ForEach(snapshot.apps.prefix(10)) { app in
+            ForEach(RankingSection.shownApps(snapshot: snapshot, recommendedIDs: recommendedIDs)) { app in
                 let isExpanded = viewModel.expandedAppIDs.contains(app.id)
                 VStack(alignment: .leading, spacing: 2) {
                     HStack {
                         Button {
                             viewModel.toggleExpanded(app.id)
                         } label: {
-                            AppRow(app: app, baseline: viewModel.appBaselines[app.id], isExpanded: isExpanded)
+                            AppRow(
+                                app: app, baseline: viewModel.appBaselines[app.id], isExpanded: isExpanded,
+                                isRecommended: recommendedIDs.contains(app.id))
                         }
                         .buttonStyle(.plain)
                         .help(isExpanded
@@ -286,10 +244,7 @@ private struct RankingSection: View {
                         }
                         .frame(width: 52, alignment: .trailing)
                     }
-                    // The recommendation row above shows the status for recommended apps.
-                    if !recommendedIDs.contains(app.id) {
-                        RelaunchStatus(viewModel: viewModel, appID: app.id)
-                    }
+                    RelaunchStatus(viewModel: viewModel, appID: app.id)
                     if isExpanded {
                         VStack(alignment: .leading, spacing: 0) {
                             HistoryChart(
@@ -304,12 +259,21 @@ private struct RankingSection: View {
             }
         }
     }
+
+    /// The top ten, plus any app worth relaunching that falls below them, so that every app whose
+    /// growth is highlighted stays in view.
+    static func shownApps(snapshot: MemorySnapshot, recommendedIDs: Set<String>) -> [AppMemoryUsage] {
+        let top = Array(snapshot.apps.prefix(10))
+        let rest = snapshot.apps.dropFirst(10).filter { recommendedIDs.contains($0.id) }
+        return top + rest
+    }
 }
 
 private struct AppRow: View {
     let app: AppMemoryUsage
     let baseline: Baseline?
     let isExpanded: Bool
+    let isRecommended: Bool
 
     var body: some View {
         HStack {
@@ -318,7 +282,8 @@ private struct AppRow: View {
             SizeRowLabels(
                 title: Text(app.displayName),
                 subtitle: tr(.popoverRankingProcessCount, app.processes.count),
-                bytes: app.footprintBytes, baseline: baseline, subject: .app)
+                bytes: app.footprintBytes, baseline: baseline, subject: .app,
+                highlightsGrowth: isRecommended)
         }
         // Without this, only the text and images are clickable, not the gaps between them.
         .contentShape(Rectangle())
@@ -334,6 +299,8 @@ private struct SizeRowLabels: View {
     let bytes: UInt64
     let baseline: Baseline?
     let subject: GrowthLabel.Subject
+    /// Shows the growth in orange: the app has grown enough that relaunching it is worthwhile.
+    var highlightsGrowth = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -346,7 +313,8 @@ private struct SizeRowLabels: View {
         VStack(alignment: .trailing, spacing: 0) {
             Text(ByteFormat.string(bytes)).monospacedDigit()
             if let baseline, let growth = ByteFormat.growth(of: bytes, over: baseline.bytes) {
-                Text(growth).font(.caption2).monospacedDigit().foregroundStyle(.secondary)
+                Text(growth).font(.caption2).monospacedDigit()
+                    .foregroundStyle(highlightsGrowth ? AnyShapeStyle(.orange) : AnyShapeStyle(.secondary))
                     .help(GrowthLabel.text(bytes: bytes, baseline: baseline, subject: subject) ?? "")
             }
         }
@@ -484,14 +452,15 @@ private struct RelaunchStatus: View {
     }
 }
 
-/// Results for apps that are in neither the recommendations nor the ranking any more, e.g. an
+/// Results for apps that are not in the ranking any more, e.g. an
 /// app that quit and could not be reopened. Without this the message would vanish with the row.
 private struct OrphanedRelaunchStatuses: View {
     let viewModel: MonitorViewModel
     let snapshot: MemorySnapshot
 
     var body: some View {
-        let visible = Set(snapshot.apps.prefix(10).map(\.id)).union(viewModel.recommendedAppIDs)
+        let visible = Set(RankingSection.shownApps(
+            snapshot: snapshot, recommendedIDs: viewModel.recommendedAppIDs).map(\.id))
         let orphans = viewModel.relaunchStates.keys.filter { !visible.contains($0) }.sorted()
         if !orphans.isEmpty {
             VStack(alignment: .leading, spacing: 6) {

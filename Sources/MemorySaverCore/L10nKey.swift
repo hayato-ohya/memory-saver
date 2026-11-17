@@ -92,6 +92,19 @@ public enum L10nKey: String, CaseIterable, Sendable {
     case chartHelpShow = "chart.help.show"
     case chartHelpHide = "chart.help.hide"
     case chartAccessibilityHint = "chart.accessibilityHint"
+    case chartSystemAccessibilityHint = "chart.system.accessibilityHint"
+
+    // MARK: Updates
+    case updateAvailable = "update.available"
+    case updateDownload = "update.download"
+    case settingsSectionUpdates = "settings.section.updates"
+    case settingsUpdateCheckToggle = "settings.update.toggle"
+    case settingsUpdateCheckNow = "settings.update.checkNow"
+    case settingsUpdateChecking = "settings.update.checking"
+    case settingsUpdateUpToDate = "settings.update.upToDate"
+    case settingsUpdateFailed = "settings.update.failed"
+    case settingsUpdateLastChecked = "settings.update.lastChecked"
+    case settingsUpdateNeverChecked = "settings.update.neverChecked"
 
     // MARK: Settings
     case settingsWindowTitle = "settings.windowTitle"

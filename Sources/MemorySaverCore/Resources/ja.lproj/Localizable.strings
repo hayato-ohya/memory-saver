@@ -228,6 +228,39 @@
 /* Accessibility hint (read aloud by VoiceOver, not shown) of the WindowServer row. Describes what activating the row does. */
 "chart.accessibilityHint" = "メモリの推移を開閉します";
 
+/* Accessibility hint (read aloud by VoiceOver, not shown) of the memory summary at the top of the popover. Describes what activating it does. */
+"chart.system.accessibilityHint" = "Macのメモリ使用量の推移を開閉します";
+
+/* Shown in the popover and in Settings when a newer release exists. %@ = its version number, e.g. 0.4. */
+"update.available" = "新しいバージョン %@ があります";
+
+/* Button next to update.available that opens the release page in the browser. */
+"update.download" = "ダウンロード";
+
+/* Settings, heading of the section with the version number and the update check. */
+"settings.section.updates" = "アップデート";
+
+/* Settings, label of the switch that lets the app check GitHub once a day for a newer version. */
+"settings.update.toggle" = "新しいバージョンを確認する";
+
+/* Settings, button that checks for a newer version right away. */
+"settings.update.checkNow" = "今すぐ確認";
+
+/* Settings, grey text while the update check is running. */
+"settings.update.checking" = "確認しています…";
+
+/* Settings, grey text after a check found no newer version. */
+"settings.update.upToDate" = "最新のバージョンです";
+
+/* Settings, grey text when the update check could not reach GitHub. */
+"settings.update.failed" = "確認できませんでした。あとでもう一度試します";
+
+/* Settings, grey text with the time of the last update check. %@ = date and time. */
+"settings.update.lastChecked" = "最終確認: %@";
+
+/* Settings, grey text before the first update check. */
+"settings.update.neverChecked" = "まだ確認していません";
+
 
 /* ==== Settings ==== */
 

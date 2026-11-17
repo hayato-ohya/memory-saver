@@ -37,6 +37,12 @@ final class AppModel {
             Task { await notifier.requestAuthorizationIfNeeded() }
         }
 
+        let updateChecker = UpdateChecker(
+            currentVersion: AppVersion.current,
+            isEnabled: { MainActor.assumeIsolated { viewModel.settings.updateCheckEnabled } })
+        viewModel.updateChecker = updateChecker
+        updateChecker.start()
+
         let store: TrendStore
         var storeWarning: String?
         do {

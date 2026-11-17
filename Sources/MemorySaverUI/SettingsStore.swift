@@ -67,6 +67,7 @@ public final class SettingsStore {
         static let windowServerThreshold = "windowServerGrowthThresholdBytes"
         static let excluded = "excludedAppIDs"
         static let notifications = "notificationsEnabled"
+        static let updateCheck = "updateCheckEnabled"
     }
 
     @ObservationIgnored private let defaults: UserDefaults
@@ -86,6 +87,10 @@ public final class SettingsStore {
     }
     public var notificationsEnabled: Bool {
         didSet { defaults.set(notificationsEnabled, forKey: Key.notifications) }
+    }
+    /// Whether to ask GitHub once a day for a newer release. The app's only network access.
+    public var updateCheckEnabled: Bool {
+        didSet { defaults.set(updateCheckEnabled, forKey: Key.updateCheck) }
     }
     /// Mirrors the real login item state; the system is the source of truth, not UserDefaults.
     public private(set) var launchAtLoginStatus: LoginItemStatus
@@ -109,6 +114,7 @@ public final class SettingsStore {
             .map { UInt64($0) } ?? base.windowServerGrowthThresholdBytes
         excludedAppIDs = Set(defaults.stringArray(forKey: Key.excluded) ?? [])
         notificationsEnabled = defaults.object(forKey: Key.notifications) as? Bool ?? true
+        updateCheckEnabled = defaults.object(forKey: Key.updateCheck) as? Bool ?? true
         launchAtLoginStatus = loginItem.status
     }
 

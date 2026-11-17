@@ -17,7 +17,7 @@ public struct PopoverView: View {
             if let snapshot = viewModel.snapshot {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 14) {
-                        SystemHeader(system: snapshot.system)
+                        SystemHeader(viewModel: viewModel, snapshot: snapshot)
                         Divider()
                         WindowServerSection(viewModel: viewModel, snapshot: snapshot)
                         OrphanedRelaunchStatuses(viewModel: viewModel, snapshot: snapshot)
@@ -46,6 +46,10 @@ public struct PopoverView: View {
                     description: Text(tr(.popoverMeasuringDescription)))
                     .frame(height: 160)
             }
+            if let checker = viewModel.updateChecker, let release = checker.available,
+               viewModel.settings.updateCheckEnabled {
+                UpdateBanner(release: release)
+            }
             if viewModel.snapshot != nil, let error = viewModel.lastError {
                 Label(error, systemImage: "exclamationmark.triangle")
                     .font(.caption).foregroundStyle(.orange)
@@ -73,11 +77,33 @@ public struct PopoverView: View {
 // MARK: - Header
 
 private struct SystemHeader: View {
-    let system: SystemMemorySnapshot
+    let viewModel: MonitorViewModel
+    let snapshot: MemorySnapshot
+    private var system: SystemMemorySnapshot { snapshot.system }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
+            Button {
+                viewModel.toggleSystemExpanded()
+            } label: {
+                summary.contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .help(viewModel.isSystemExpanded ? tr(.chartHelpHide) : tr(.chartHelpShow))
+            .accessibilityHint(tr(.chartSystemAccessibilityHint))
+            if viewModel.isSystemExpanded {
+                HistoryChart(
+                    series: .systemUsed, baseline: nil,
+                    loader: viewModel.historyLoader, refreshToken: snapshot.timestamp, leadingInset: 20)
+                    .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 6))
+            }
+        }
+    }
+
+    private var summary: some View {
+        VStack(alignment: .leading, spacing: 6) {
             HStack {
+                DisclosureChevron(isExpanded: viewModel.isSystemExpanded)
                 Text(tr(.popoverHeaderMemory)).font(.headline)
                 Spacer()
                 Text(pressureLabel).font(.subheadline).foregroundStyle(pressureColor)
@@ -347,6 +373,20 @@ private struct ProcessBreakdown: View {
         }
         .font(.caption).foregroundStyle(.secondary)
         .padding(.vertical, 4).padding(.leading, 46).padding(.trailing, 8)
+    }
+}
+
+private struct UpdateBanner: View {
+    let release: ReleaseInfo
+
+    var body: some View {
+        HStack {
+            Label(tr(.updateAvailable, release.version), systemImage: "arrow.down.circle")
+                .font(.caption)
+            Spacer()
+            Button(tr(.updateDownload)) { NSWorkspace.shared.open(release.url) }
+                .controlSize(.small)
+        }
     }
 }
 

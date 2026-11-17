@@ -12,11 +12,12 @@ Memory that macOS can reclaim on its own, such as file cache, is left alone. Wha
 - **Per-app memory.** Each app's helper processes are counted toward the app, the same way Activity Monitor groups them. For example, every Brave renderer counts toward Brave. Click a row to see its memory over time and its processes.
 - **Relaunch suggestions.** Suggests relaunching an app when it uses at least 2 GB and has grown to at least 1.5 times its size shortly after launch. Both thresholds can be changed in Settings.
 - **WindowServer.** Shows how much WindowServer has grown since login, and which apps' windows are the likely cause.
-- **Memory over time.** Click an app or WindowServer to see a chart of the last 24 hours or 7 days, with the baseline marked.
+- **Memory over time.** Click an app, WindowServer, or the memory summary at the top to see a chart of the last 24 hours or 7 days, with the baseline marked.
 - **Relaunch on a click only.**
   - It quits the app normally, so the app can ask to save unsaved work, then opens it again.
   - It never force quits, and never acts on its own.
   - System processes such as Finder, the Dock and loginwindow are shown but cannot be relaunched.
+- **Update check.** Tells you in the popover when a new version is released.
 - **Notifications.** Notifies you when memory pressure is high and there is something to relaunch.
 - **Languages.** Japanese and English, following your macOS language setting.
 
@@ -63,7 +64,7 @@ swift test
 
 ## Privacy
 
-- MemorySaver makes no network connections.
+- MemorySaver's only network access is a check for new versions, about once a day. It asks GitHub for the latest release of this repository and sends nothing about you or your Mac. Turn it off in Settings under **Updates**.
 - Everything it records stays on your Mac, in `~/Library/Application Support/MemorySaver/history.sqlite`: memory sizes per app and when they were measured.
 - It reads process names and memory figures. It does not read window titles or contents, and needs no Screen Recording permission.
 

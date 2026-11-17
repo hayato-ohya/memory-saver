@@ -246,6 +246,39 @@
 /* Accessibility hint (read aloud by VoiceOver, not shown) of the WindowServer row. Describes what activating the row does. */
 "chart.accessibilityHint" = "Shows or hides WindowServer's memory over time";
 
+/* Accessibility hint (read aloud by VoiceOver, not shown) of the memory summary at the top of the popover. Describes what activating it does. */
+"chart.system.accessibilityHint" = "Shows or hides the Mac's used memory over time";
+
+/* Shown in the popover and in Settings when a newer release exists. %@ = its version number, e.g. 0.4. */
+"update.available" = "Version %@ is available";
+
+/* Button next to update.available that opens the release page in the browser. */
+"update.download" = "Download";
+
+/* Settings, heading of the section with the version number and the update check. */
+"settings.section.updates" = "Updates";
+
+/* Settings, label of the switch that lets the app check GitHub once a day for a newer version. */
+"settings.update.toggle" = "Check for new versions";
+
+/* Settings, button that checks for a newer version right away. */
+"settings.update.checkNow" = "Check Now";
+
+/* Settings, grey text while the update check is running. */
+"settings.update.checking" = "Checking…";
+
+/* Settings, grey text after a check found no newer version. */
+"settings.update.upToDate" = "You have the latest version";
+
+/* Settings, grey text when the update check could not reach GitHub. */
+"settings.update.failed" = "Couldn't check. Will try again later";
+
+/* Settings, grey text with the time of the last update check. %@ = date and time. */
+"settings.update.lastChecked" = "Last checked: %@";
+
+/* Settings, grey text before the first update check. */
+"settings.update.neverChecked" = "Not checked yet";
+
 
 /* ==== Settings ==== */
 

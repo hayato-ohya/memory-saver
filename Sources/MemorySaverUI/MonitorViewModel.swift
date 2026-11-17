@@ -25,6 +25,8 @@ public final class MonitorViewModel {
     @ObservationIgnored public var onRefreshRequested: (() -> Void)?
     /// Set by the app; read by the history charts. Without it the charts stay empty.
     @ObservationIgnored public var historyLoader: HistoryLoader?
+    /// Set by the app. nil in tests and previews, which then show no update UI.
+    @ObservationIgnored public var updateChecker: UpdateChecker?
 
     public let settings: SettingsStore
     /// Keyed by app id.
@@ -37,6 +39,8 @@ public final class MonitorViewModel {
     public private(set) var expandedAppIDs: Set<String> = []
     /// Whether WindowServer's history chart is open.
     public private(set) var isWindowServerExpanded = false
+    /// Whether the chart of the whole Mac's used memory is open.
+    public private(set) var isSystemExpanded = false
 
     @ObservationIgnored private let relauncher: AppRelauncher
     @ObservationIgnored private let followUpRefreshDelay: Duration
@@ -71,6 +75,18 @@ public final class MonitorViewModel {
     }
 
     public func toggleWindowServerExpanded() { isWindowServerExpanded.toggle() }
+
+    public func toggleSystemExpanded() { isSystemExpanded.toggle() }
+
+    /// Called when the update check toggle changes.
+    public func updateCheckToggled() async {
+        guard let updateChecker else { return }
+        if settings.updateCheckEnabled {
+            await updateChecker.checkIfDue()
+        } else {
+            updateChecker.clearAvailable()
+        }
+    }
 
     public func showSettings() { settingsPresenter.show(viewModel: self) }
 

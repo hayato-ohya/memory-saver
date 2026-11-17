@@ -56,9 +56,16 @@ public struct SettingsView: View {
             Section(tr(.settingsSectionExclusions)) {
                 ExclusionList(viewModel: viewModel)
             }
-            if let version {
-                Section {
+            Section(tr(.settingsSectionUpdates)) {
+                if let version {
                     LabeledContent(tr(.settingsVersion), value: version)
+                }
+                if let checker = viewModel.updateChecker {
+                    Toggle(tr(.settingsUpdateCheckToggle), isOn: $settings.updateCheckEnabled)
+                        .onChange(of: settings.updateCheckEnabled) {
+                            Task { await viewModel.updateCheckToggled() }
+                        }
+                    UpdateStatusRow(checker: checker)
                 }
             }
         }
@@ -115,6 +122,40 @@ private struct ExclusionList: View {
             }
         }
         .disabled(candidates.isEmpty)
+    }
+}
+
+private struct UpdateStatusRow: View {
+    let checker: UpdateChecker
+
+    var body: some View {
+        HStack {
+            Group {
+                if let release = checker.available {
+                    Text(tr(.updateAvailable, release.version)).foregroundStyle(.orange)
+                } else {
+                    switch checker.status {
+                    case .checking: Text(tr(.settingsUpdateChecking))
+                    case .upToDate: Text(tr(.settingsUpdateUpToDate))
+                    case .failed: Text(tr(.settingsUpdateFailed))
+                    case .idle:
+                        if let date = checker.lastCheck {
+                            Text(tr(.settingsUpdateLastChecked, date.formatted(date: .abbreviated, time: .shortened)))
+                        } else {
+                            Text(tr(.settingsUpdateNeverChecked))
+                        }
+                    }
+                }
+            }
+            .font(.caption).foregroundStyle(.secondary)
+            Spacer()
+            if let release = checker.available {
+                Button(tr(.updateDownload)) { NSWorkspace.shared.open(release.url) }
+            } else {
+                Button(tr(.settingsUpdateCheckNow)) { Task { await checker.checkNow() } }
+                    .disabled(checker.status == .checking)
+            }
+        }
     }
 }
 

@@ -15,7 +15,7 @@ case "$MODE" in
 esac
 
 # The version shown to users (Settings, Finder's Get Info). Bump it for each release.
-VERSION="0.5"
+VERSION="0.6"
 BUNDLE_ID="com.memorysaver.app"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

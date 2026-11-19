@@ -34,6 +34,9 @@ public final class MonitorViewModel {
     /// Display names of apps with a relaunch state, for showing a result after the app has
     /// left the ranking.
     public private(set) var relaunchNames: [String: String] = [:]
+    /// Keyed by app id: why the last helper process quit request did nothing. Shown under the
+    /// app's process list until dismissed.
+    public private(set) var processTerminationMessages: [String: String] = [:]
 
     /// Apps whose process breakdown is open in the ranking.
     public private(set) var expandedAppIDs: Set<String> = []
@@ -43,6 +46,7 @@ public final class MonitorViewModel {
     public private(set) var isSystemExpanded = false
 
     @ObservationIgnored private let relauncher: AppRelauncher
+    @ObservationIgnored private let terminator: ProcessTerminator
     @ObservationIgnored private let followUpRefreshDelay: Duration
     @ObservationIgnored private var relaunchTasks: [String: Task<Void, Never>] = [:]
     @ObservationIgnored public var notifier: Notifier?
@@ -51,11 +55,13 @@ public final class MonitorViewModel {
     public init(
         settings: SettingsStore = SettingsStore(),
         relauncher: AppRelauncher = AppRelauncher(),
+        terminator: ProcessTerminator = ProcessTerminator(),
         notifier: Notifier? = nil,
         followUpRefreshDelay: Duration = .seconds(5)
     ) {
         self.settings = settings
         self.relauncher = relauncher
+        self.terminator = terminator
         self.notifier = notifier
         self.followUpRefreshDelay = followUpRefreshDelay
     }
@@ -109,6 +115,27 @@ public final class MonitorViewModel {
             try? await Task.sleep(for: followUpRefreshDelay)
             requestRefresh()
         }
+    }
+
+    /// Asks one helper process of `app` to quit (SIGTERM). The app itself keeps running.
+    public func terminate(_ process: ProcessSample, in app: AppMemoryUsage) {
+        switch terminator.terminate(process, in: app) {
+        case .requested:
+            processTerminationMessages[app.id] = nil
+        case .notRunning:
+            processTerminationMessages[app.id] = tr(.processTerminateResultNotRunning)
+        case .failed(let reason):
+            processTerminationMessages[app.id] = tr(.processTerminateResultFailed, reason)
+        }
+        // Drop the process from the list once it has exited; SIGTERM handlers take a moment.
+        Task {
+            try? await Task.sleep(for: followUpRefreshDelay / 5)
+            requestRefresh()
+        }
+    }
+
+    public func dismissProcessTerminationMessage(for appID: String) {
+        processTerminationMessages[appID] = nil
     }
 
     /// Stops waiting for the app to quit. The app is not reopened and never force-quit.

@@ -17,6 +17,10 @@ Memory that macOS can reclaim on its own, such as file cache, is left alone. Wha
   - It quits the app normally, so the app can ask to save unsaved work, then opens it again.
   - It never force quits, and never acts on its own.
   - System processes such as Finder, the Dock and loginwindow are shown but cannot be relaunched.
+- **Quit a single helper process.** In an app's process list, the ⓧ button next to a helper (such as a browser renderer) asks just that process to quit, without relaunching the app.
+  - It asks for confirmation first, and sends a normal quit request (SIGTERM), never a force quit.
+  - Whatever the process was handling, such as a browser tab or an extension, may close or need reloading.
+  - The app's main process, system processes, and other users' processes cannot be quit this way.
 - **Update check.** Tells you in the popover when a new version is released.
 - **Notifications.** Notifies you when memory pressure is high and there is something to relaunch.
 - **Languages.** Japanese and English, following your macOS language setting.

@@ -136,6 +136,33 @@
 "relaunch.error.quitRefused" = "アプリに終了を要求できませんでした。";
 
 
+/* ==== Helper process termination ==== */
+
+/* Tooltip of the small x button at the right of a helper process in an app's process list. */
+"process.terminate.help" = "このプロセスを終了";
+
+/* Accessibility label (read aloud by VoiceOver, not shown) of the small x button next to a helper process. %@ = the process's name. */
+"process.terminate.accessibilityLabel" = "%@ を終了";
+
+/* Title of the confirmation dialog for quitting one helper process. %@ = the process's name, possibly followed by its role (e.g. "Brave Browser Helper (Renderer) — renderer"). */
+"process.terminate.confirm.title" = "%@ を終了しますか？";
+
+/* Message of the helper process confirmation dialog. %@ = the name of the app the process belongs to. The process is asked to quit (not force-quit); whatever it was doing, such as a browser tab, may close or need reloading. */
+"process.terminate.confirm.message" = "このプロセスだけに終了を要求します。%@ は動き続けます。このプロセスが担当していたブラウザのタブや機能拡張などが閉じたり、再読み込みが必要になったりすることがあります。";
+
+/* Default button of the helper process confirmation dialog. */
+"process.terminate.confirm.button" = "プロセスを終了";
+
+/* Popover, message under an app's process list: the process had already exited (or its id now belongs to another program) by the time the quit was confirmed, so nothing was done. */
+"process.terminate.result.notRunning" = "プロセスは既に終了していたため、何もしませんでした。";
+
+/* Popover, message under an app's process list when the quit request could not be sent. %@ = the reason, a complete sentence or the system's error description. */
+"process.terminate.result.failed" = "プロセスを終了できませんでした: %@";
+
+/* Reason shown inside process.terminate.result.failed: the process is the app's main process, a system process, or belongs to another user. A complete sentence with a final full stop. */
+"process.terminate.error.unsupported" = "このプロセスはMemorySaverから終了できません。";
+
+
 /* ==== Growth ==== */
 
 /* Tooltip on an app's growth figure (the "+620 MB" under its memory amount). %@ = the growth, already formatted with a plus sign and unit (e.g. "+620 MB"). The baseline is the app's size shortly after it launched. */

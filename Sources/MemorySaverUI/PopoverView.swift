@@ -5,6 +5,7 @@ import MemorySaverCore
 public struct PopoverView: View {
     let viewModel: MonitorViewModel
     @State private var pendingRelaunch: AppMemoryUsage?
+    @State private var pendingTermination: PendingTermination?
     @State private var contentHeight: CGFloat = Self.maxContentHeight
 
     private static let maxContentHeight: CGFloat = 520
@@ -21,7 +22,9 @@ public struct PopoverView: View {
                         Divider()
                         WindowServerSection(viewModel: viewModel, snapshot: snapshot)
                         OrphanedRelaunchStatuses(viewModel: viewModel, snapshot: snapshot)
-                        RankingSection(viewModel: viewModel, snapshot: snapshot, pendingRelaunch: $pendingRelaunch)
+                        RankingSection(
+                            viewModel: viewModel, snapshot: snapshot, pendingRelaunch: $pendingRelaunch,
+                            pendingTermination: $pendingTermination)
                     }
                     // Together with the negative padding below, this moves the scroll bar out
                     // into the window's margin, so it never covers the numbers.
@@ -32,6 +35,22 @@ public struct PopoverView: View {
                 // A ScrollView has no height of its own in a menu bar window, so it takes its
                 // content's height up to the cap.
                 .frame(height: min(contentHeight, Self.maxContentHeight))
+                // Attached here rather than next to the relaunch dialog: one view holding two
+                // confirmation dialogs does not reliably show the second.
+                .confirmationDialog(
+                    pendingTermination.map { tr(.processTerminateConfirmTitle, $0.process.displayTitle) } ?? "",
+                    isPresented: Binding(
+                        get: { pendingTermination != nil }, set: { if !$0 { pendingTermination = nil } }),
+                    titleVisibility: .visible,
+                    presenting: pendingTermination
+                ) { pending in
+                    Button(tr(.processTerminateConfirmButton), role: .destructive) {
+                        viewModel.terminate(pending.process, in: pending.app)
+                    }
+                    Button(tr(.relaunchConfirmCancel), role: .cancel) {}
+                } message: { pending in
+                    Text(tr(.processTerminateConfirmMessage, pending.app.displayName))
+                }
             } else if let error = viewModel.lastError {
                 // Without this, a sampler or database that always fails would leave the
                 // popover saying it is measuring, forever.
@@ -209,6 +228,7 @@ private struct RankingSection: View {
     let viewModel: MonitorViewModel
     let snapshot: MemorySnapshot
     @Binding var pendingRelaunch: AppMemoryUsage?
+    @Binding var pendingTermination: PendingTermination?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -251,7 +271,8 @@ private struct RankingSection: View {
                                 series: .app(id: app.id), baseline: viewModel.appBaselines[app.id],
                                 loader: viewModel.historyLoader, refreshToken: snapshot.timestamp)
                             Divider().padding(.leading, 46).padding(.trailing, 8)
-                            ProcessBreakdown(processes: app.processes)
+                            ProcessBreakdown(
+                                viewModel: viewModel, app: app, pendingTermination: $pendingTermination)
                         }
                         .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 6))
                     }
@@ -321,12 +342,26 @@ private struct SizeRowLabels: View {
     }
 }
 
+/// A helper process waiting for the user to confirm that it should quit.
+struct PendingTermination: Identifiable {
+    let process: ProcessSample
+    let app: AppMemoryUsage
+    var id: Int32 { process.pid }
+}
+
+extension ProcessSample {
+    /// Name and, for helpers that share a name, their role: "Brave Browser Helper — renderer".
+    var displayTitle: String { detail.map { "\(name) — \($0)" } ?? name }
+}
+
 private struct ProcessBreakdown: View {
-    let processes: [ProcessSample]
+    let viewModel: MonitorViewModel
+    let app: AppMemoryUsage
+    @Binding var pendingTermination: PendingTermination?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            ForEach(processes, id: \.pid) { process in
+            ForEach(app.processes, id: \.pid) { process in
                 HStack(spacing: 4) {
                     // The name gives way first, then the detail; the size never truncates.
                     Text(process.name).lineLimit(1).truncationMode(.middle)
@@ -336,7 +371,30 @@ private struct ProcessBreakdown: View {
                     Spacer(minLength: 0)
                     Text(ByteFormat.string(process.footprintBytes)).monospacedDigit()
                         .lineLimit(1).fixedSize().layoutPriority(2)
+                    // Fixed width so the sizes line up whether or not a button is shown.
+                    ZStack {
+                        if ProcessTerminator.canTerminate(process, in: app) {
+                            Button {
+                                pendingTermination = PendingTermination(process: process, app: app)
+                            } label: {
+                                Image(systemName: "xmark.circle.fill")
+                            }
+                            .buttonStyle(.borderless)
+                            .help(tr(.processTerminateHelp))
+                            .accessibilityLabel(tr(.processTerminateAccessibilityLabel, process.displayTitle))
+                        }
+                    }
+                    .frame(width: 14)
                 }
+            }
+            if let message = viewModel.processTerminationMessages[app.id] {
+                HStack(alignment: .top) {
+                    Text(message).fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                    Button(tr(.relaunchStatusDismiss)) { viewModel.dismissProcessTerminationMessage(for: app.id) }
+                        .buttonStyle(.link)
+                }
+                .padding(.top, 2)
             }
         }
         .font(.caption).foregroundStyle(.secondary)

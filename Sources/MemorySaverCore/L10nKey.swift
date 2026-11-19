@@ -57,6 +57,16 @@ public enum L10nKey: String, CaseIterable, Sendable {
     case relaunchErrorAppNotFound = "relaunch.error.appNotFound"
     case relaunchErrorQuitRefused = "relaunch.error.quitRefused"
 
+    // MARK: Helper process termination
+    case processTerminateHelp = "process.terminate.help"
+    case processTerminateAccessibilityLabel = "process.terminate.accessibilityLabel"
+    case processTerminateConfirmTitle = "process.terminate.confirm.title"
+    case processTerminateConfirmMessage = "process.terminate.confirm.message"
+    case processTerminateConfirmButton = "process.terminate.confirm.button"
+    case processTerminateResultNotRunning = "process.terminate.result.notRunning"
+    case processTerminateResultFailed = "process.terminate.result.failed"
+    case processTerminateErrorUnsupported = "process.terminate.error.unsupported"
+
     // MARK: Growth
     case growthSinceLaunch = "growth.sinceLaunch"
     case growthSinceStartup = "growth.sinceStartup"
